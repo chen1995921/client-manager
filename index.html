@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>瀹㈡埛淇℃伅绠＄悊</title>
+<title>客户信息管理</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f2f5;color:#333;font-size:14px}
@@ -89,91 +89,91 @@ input[type=file]{display:none}
 </head>
 <body>
 <div class="header">
-  <h1>馃搵 瀹㈡埛淇℃伅绠＄悊</h1>
-  <div class="stats" id="statsBar">鍏?<strong>0</strong> 鏉¤褰?/div>
+  <h1>📋 客户信息管理</h1>
+  <div class="stats" id="statsBar">共 <strong>0</strong> 条记录</div>
 </div>
 <div class="toolbar">
   <div id="filterBtns" style="display:flex;gap:4px">
-    <button class="filter-btn active" data-status="all" onclick="setFilter('all')">鍏ㄩ儴</button>
-    <button class="filter-btn" data-status="鏃? onclick="setFilter('鏃?)">猬滄棤</button>
-    <button class="filter-btn" data-status="宸蹭笅鍗? onclick="setFilter('宸蹭笅鍗?)">馃搵宸蹭笅鍗?/button>
-    <button class="filter-btn" data-status="瀛︿範涓? onclick="setFilter('瀛︿範涓?)">馃攧瀛︿範涓?/button>
-    <button class="filter-btn" data-status="宸插畬鎴? onclick="setFilter('宸插畬鎴?)">鉁呭凡瀹屾垚</button>
+    <button class="filter-btn active" data-status="all" onclick="setFilter('all')">全部</button>
+    <button class="filter-btn" data-status="无" onclick="setFilter('无')">⬜无</button>
+    <button class="filter-btn" data-status="已下单" onclick="setFilter('已下单')">📋已下单</button>
+    <button class="filter-btn" data-status="学习中" onclick="setFilter('学习中')">🔄学习中</button>
+    <button class="filter-btn" data-status="已完成" onclick="setFilter('已完成')">✅已完成</button>
   </div>
   <span style="color:#ccc;font-size:12px">|</span>
-  <button onclick="openAddModal()" class="primary" style="background:#34a853;color:#fff;border-color:#34a853;font-weight:500">锛嬫柊澧?/button>
- <button onclick="batchMode()" id="batchBtn">鈽?鎵归噺鎿嶄綔</button>
-  <button class="danger" onclick="deduplicate()">馃Ч 涓€閿幓閲?/button>
-  <label class="btn">馃搨 瀵煎叆 JSON<input type="file" accept=".json" onchange="importJSON(event)"></label>
-  <button onclick="exportJSON()">馃捑 瀵煎嚭 JSON</button>
+  <button onclick="openAddModal()" class="primary" style="background:#34a853;color:#fff;border-color:#34a853;font-weight:500">＋新增</button>
+ <button onclick="batchMode()" id="batchBtn">☑ 批量操作</button>
+  <button class="danger" onclick="deduplicate()">🧹 一键去重</button>
+  <label class="btn">📂 导入 JSON<input type="file" accept=".json" onchange="importJSON(event)"></label>
+  <button onclick="exportJSON()">💾 导出 JSON</button>
   <span style="color:#ccc;font-size:12px">|</span>
-  <button onclick="exportBackup()">馃摝 澶囦唤</button>
-  <span id="cloudStatus" style="font-size:12px;color:#666;display:inline-flex;align-items:center;gap:4px;cursor:pointer;margin-right:8px" onclick="showCloudLogin()">鈽侊笍 鏈櫥褰?/span>
+  <button onclick="exportBackup()">📦 备份</button>
+  <span id="cloudStatus" style="font-size:12px;color:#666;display:inline-flex;align-items:center;gap:4px;cursor:pointer;margin-right:8px" onclick="showCloudLogin()">☁️ 未登录</span>
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="鎼滅储濮撳悕/鍖婚櫌/骞冲彴..." oninput="render()">
+    <input type="text" id="searchInput" placeholder="搜索姓名/医院/平台..." oninput="render()">
   </div>
 </div>
 <div class="batch-bar" id="batchBar">
-  <span>宸查€?<span class="count" id="selCount">0</span> 鏉?/span>
-  <button onclick="batchEdit()" class="primary">鉁?鎵归噺淇敼</button>
-  <button onclick="batchSetStatus('鏃?)">猬?璁句负鏃?/button>
-  <button onclick="batchSetStatus('宸蹭笅鍗?)">馃搵 璁惧凡涓嬪崟</button>
-  <button onclick="batchSetStatus('瀛︿範涓?)">馃攧 璁惧涔犱腑</button>
-  <button onclick="batchSetStatus('宸插畬鎴?)">鉁?璁惧凡瀹屾垚</button>
-  <button onclick="batchDelete()" class="danger">馃棏 鎵归噺鍒犻櫎</button>
-  <button onclick="selectAll()">鈽?鍏ㄩ€?/button>
-  <button onclick="clearSelection()">鍙栨秷</button>
+  <span>已选 <span class="count" id="selCount">0</span> 条</span>
+  <button onclick="batchEdit()" class="primary">✏ 批量修改</button>
+  <button onclick="batchSetStatus('无')">⬜ 设为无</button>
+  <button onclick="batchSetStatus('已下单')">📋 设已下单</button>
+  <button onclick="batchSetStatus('学习中')">🔄 设学习中</button>
+  <button onclick="batchSetStatus('已完成')">✅ 设已完成</button>
+  <button onclick="batchDelete()" class="danger">🗑 批量删除</button>
+  <button onclick="selectAll()">☑ 全选</button>
+  <button onclick="clearSelection()">取消</button>
 </div>
 <div class="container" id="container"></div>
 <div class="pagination" id="pagination"></div>
 
 <div class="modal-overlay" id="cloudModalOverlay">
   <div class="modal">
-    <div class="modal-header"><span id="cloudModalTitle">鈽侊笍 浜戝悓姝ヨ缃?/span><button class="close" onclick="closeCloudModal()">鉁?/button></div>
+    <div class="modal-header"><span id="cloudModalTitle">☁️ 云同步设置</span><button class="close" onclick="closeCloudModal()">✕</button></div>
     <div class="modal-body" id="cloudModalBody">
-      <div class="form-group"><label>GitHub Token锛堜釜浜鸿闂护鐗岋級</label>
+      <div class="form-group"><label>GitHub Token（个人访问令牌）</label>
         <input id="cf_token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:9px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px">
-        <div style="font-size:11px;color:#999;margin-top:4px">闇€瑕?repo 鍜?gist 鏉冮檺銆?nbsp;<a href="https://github.com/settings/tokens" target="_blank" style="color:#1a73e8">鍘诲垱寤?鈫?/a></div>
+        <div style="font-size:11px;color:#999;margin-top:4px">需要 repo 和 gist 权限。&nbsp;<a href="https://github.com/settings/tokens" target="_blank" style="color:#1a73e8">去创建 →</a></div>
       </div>
-      <div class="form-group"><label>Gist ID锛堝凡鍒涘缓杩囧垯鑷姩濉厖锛?/label>
-        <input id="cf_gist" placeholder="鐣欑┖鑷姩鍒涘缓鏂?Gist" style="width:100%;padding:9px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px">
+      <div class="form-group"><label>Gist ID（已创建过则自动填充）</label>
+        <input id="cf_gist" placeholder="留空自动创建新 Gist" style="width:100%;padding:9px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px">
       </div>
       <div style="margin:12px 0;display:flex;gap:8px;flex-wrap:wrap">
-        <button onclick="cloudSave()" style="padding:8px 20px;background:#1a73e8;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">鉁?淇濆瓨</button>
-        <button onclick="cloudPush()" style="padding:8px 20px;background:#34a853;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">鈽侊笍 涓婁紶鍒颁簯</button>
-        <button onclick="cloudPull()" style="padding:8px 20px;background:#f9ab00;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">鈽侊笍 浠庝簯涓嬭浇</button>
-        <button onclick="cloudLogout()" style="padding:8px 20px;background:#d32f2f;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">閫€鍑虹櫥褰?/button>
+        <button onclick="cloudSave()" style="padding:8px 20px;background:#1a73e8;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">✓ 保存</button>
+        <button onclick="cloudPush()" style="padding:8px 20px;background:#34a853;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">☁️ 上传到云</button>
+        <button onclick="cloudPull()" style="padding:8px 20px;background:#f9ab00;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">☁️ 从云下载</button>
+        <button onclick="cloudLogout()" style="padding:8px 20px;background:#d32f2f;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">退出登录</button>
       </div>
-      <div id="cloudLog" style="font-size:12px;color:#666;background:#f5f5f5;padding:8px;border-radius:6px;max-height:200px;overflow-y:auto;white-space:pre-wrap;line-height:1.6">灏辩华</div>
+      <div id="cloudLog" style="font-size:12px;color:#666;background:#f5f5f5;padding:8px;border-radius:6px;max-height:200px;overflow-y:auto;white-space:pre-wrap;line-height:1.6">就绪</div>
     </div>
   </div>
 </div>
 
 <div class="modal-overlay" id="addModalOverlay">
   <div class="modal">
-    <div class="modal-header"><span id="addModalTitle">鏂板瀹㈡埛</span><button class="close" onclick="closeAddModal()">鉁?/button></div>
+    <div class="modal-header"><span id="addModalTitle">新增客户</span><button class="close" onclick="closeAddModal()">✕</button></div>
     <div class="modal-body" id="addModalBody"></div>
     <div class="modal-footer">
-      <button onclick="closeAddModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">鍙栨秷</button>
-      <button onclick="saveAddModal()" style="padding:6px 18px;background:#34a853;color:#fff;border:none;border-radius:5px">淇濆瓨</button>
+      <button onclick="closeAddModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">取消</button>
+      <button onclick="saveAddModal()" style="padding:6px 18px;background:#34a853;color:#fff;border:none;border-radius:5px">保存</button>
     </div>
   </div>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <div class="modal-header"><span id="modalTitle">缂栬緫瀹㈡埛</span><button class="close" onclick="closeModal()">鉁?/button></div>
+    <div class="modal-header"><span id="modalTitle">编辑客户</span><button class="close" onclick="closeModal()">✕</button></div>
     <div class="modal-body" id="modalBody"></div>
     <div class="modal-footer">
-      <button onclick="closeModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">鍙栨秷</button>
-      <button onclick="saveModal()" style="padding:6px 18px;background:#1a73e8;color:#fff;border:none;border-radius:5px">淇濆瓨</button>
+      <button onclick="closeModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">取消</button>
+      <button onclick="saveModal()" style="padding:6px 18px;background:#1a73e8;color:#fff;border:none;border-radius:5px">保存</button>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-//===================== 鍐呯疆鏁版嵁 =====================
+//===================== 内置数据 =====================
 const EMBEDDED_DATA = [];
 
 //===================== DATA =====================
@@ -186,7 +186,7 @@ let statusFilter = 'all'; // 'all' | 'none' | 'progress' | 'done'
 
 function cleanAccount(acc){
   if(!acc)return acc;
-  return String(acc).replace(/^(璐﹀彿|鐢ㄦ埛鍚峾灏忔椂)/,'');
+  return String(acc).replace(/^(账号|用户名|小时)/,'');
 }
 function init() {
   const saved = localStorage.getItem('client_mgr_v2');
@@ -217,7 +217,7 @@ function mergeFlat(flat){
     if(r.department&&!x.department)x.department=r.department;
     if(r.region&&!x.region)x.region=r.region;
     if(r.platform&&r.account&&!x.platforms.some(p=>p.platform===r.platform&&p.account===r.account))
-      x.platforms.push({platform:r.platform,account:r.account,password:r.password||'',status:r.status||'鏃?});
+      x.platforms.push({platform:r.platform,account:r.account,password:r.password||'',status:r.status||'无'});
   });
   return [...m.values()];
 }
@@ -243,7 +243,7 @@ function getFiltered(){
   if(q) re = re.filter(r=>(r.name+'|'+(r.hospital||'')+'|'+(r.department||'')+'|'+(r.region||'')+'|'+(r.platforms||[]).map(p=>p.platform+'|'+p.account).join('|')).toLowerCase().includes(q));
   // Status filter: show person if ANY platform matches the filter
   if(statusFilter!=='all'){
-    re = re.filter(r=>(r.platforms||[]).some(p=>(p.status||'鏃?)===statusFilter));
+    re = re.filter(r=>(r.platforms||[]).some(p=>(p.status||'无')===statusFilter));
   }
   return re;
 }
@@ -259,36 +259,36 @@ function getPage(){
   return{items:f.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE),total:f.length,totalPages:tp};
 }
 
-const STATUS_LABEL={'宸插畬鎴?:'鉁呭凡瀹屾垚','鏃?:'猬滄棤','宸蹭笅鍗?:'馃搵宸蹭笅鍗?,'瀛︿範涓?:'馃攧瀛︿範涓?};
+const STATUS_LABEL={'已完成':'✅已完成','无':'⬜无','已下单':'📋已下单','学习中':'🔄学习中'};
 
 function render(){
   const{items,total,totalPages}=getPage();
-  const totalNone=data.filter(r=>(r.platforms||[]).some(p=>(p.status||'鏃?)==='鏃?)).length;
-  const totalOrdered=data.filter(r=>(r.platforms||[]).some(p=>p.status==='宸蹭笅鍗?)).length;
-  const totalProgress=data.filter(r=>(r.platforms||[]).some(p=>p.status==='瀛︿範涓?)).length;
-  const totalDone=data.filter(r=>(r.platforms||[]).some(p=>p.status==='宸插畬鎴?)).length;
-  document.getElementById('statsBar').innerHTML=`鍏?<strong>${data.length}</strong> 鏉★紝猬?strong>${totalNone}</strong> 馃搵<strong>${totalOrdered}</strong> 馃攧<strong>${totalProgress}</strong> 鉁?strong>${totalDone}</strong>锛岀瓫閫夊悗 <strong>${total}</strong> 鏉;
+  const totalNone=data.filter(r=>(r.platforms||[]).some(p=>(p.status||'无')==='无')).length;
+  const totalOrdered=data.filter(r=>(r.platforms||[]).some(p=>p.status==='已下单')).length;
+  const totalProgress=data.filter(r=>(r.platforms||[]).some(p=>p.status==='学习中')).length;
+  const totalDone=data.filter(r=>(r.platforms||[]).some(p=>p.status==='已完成')).length;
+  document.getElementById('statsBar').innerHTML=`共 <strong>${data.length}</strong> 条，⬜<strong>${totalNone}</strong> 📋<strong>${totalOrdered}</strong> 🔄<strong>${totalProgress}</strong> ✅<strong>${totalDone}</strong>，筛选后 <strong>${total}</strong> 条`;
   const c=document.getElementById('container');
   if(!items.length){
-    c.innerHTML=`<div class="empty-state"><div class="icon">馃搨</div><p>鏆傛棤鏁版嵁 鈥?瀵煎叆 JSON 寮€濮嬬鐞?/p></div>`;
+    c.innerHTML=`<div class="empty-state"><div class="icon">📂</div><p>暂无数据 — 导入 JSON 开始管理</p></div>`;
     document.getElementById('pagination').innerHTML='';return;
   }
   let html='';
   items.forEach(r=>{
     const pfs=r.platforms||[];
     const tr=pfs.map((p,i)=>{
-      const sk=p.status||'鏃?;
+      const sk=p.status||'无';
       return `<tr>
         <td>${esc(p.platform)}</td>
-        <td><span class="acc-text">${esc(p.account||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.account)}')">馃搵</span></td>
-        <td><span class="pwd-text">${esc(p.password||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.password)}')">馃搵</span></td>
-        <td><span class="btn-copy" onclick="copyPlatform('${r.id}',${i})">鏁村悎澶嶅埗</span></td>
+        <td><span class="acc-text">${esc(p.account||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.account)}')">📋</span></td>
+        <td><span class="pwd-text">${esc(p.password||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.password)}')">📋</span></td>
+        <td><span class="btn-copy" onclick="copyPlatform('${r.id}',${i})">整合复制</span></td>
         <td><span class="status-badge status-${sk}" onclick="toggleStatus('${r.id}',${i})">${STATUS_LABEL[sk]||sk}</span></td>
       </tr>`;
     }).join('');
-    const dpt=r.department?`<span class="meta-tag">馃搵 ${esc(r.department)}</span>`:'';
-    const hos=r.hospital?`<span class="meta-tag">馃彞 ${esc(r.hospital)}</span>`:'';
-    const reg=r.region?`<span class="meta-tag">馃搷 ${esc(r.region)}</span>`:'';
+    const dpt=r.department?`<span class="meta-tag">📋 ${esc(r.department)}</span>`:'';
+    const hos=r.hospital?`<span class="meta-tag">🏥 ${esc(r.hospital)}</span>`:'';
+    const reg=r.region?`<span class="meta-tag">📍 ${esc(r.region)}</span>`:'';
     html+=`<div class="card" id="card_${r.id}">
       <div class="card-header" onclick="toggleCard('${r.id}')">
         <div class="cb-wrap" onclick="event.stopPropagation()">
@@ -297,19 +297,19 @@ function render(){
         <div class="info">
           <div class="name-row">
             <span class="name">${esc(r.name)}</span>
-            <span style="font-size:11px;color:#aaa">${pfs.length} 骞冲彴</span>
+            <span style="font-size:11px;color:#aaa">${pfs.length} 平台</span>
           </div>
           <div class="meta-tags">${reg}${hos}${dpt}</div>
         </div>
         <div class="action-btns" onclick="event.stopPropagation()">
-          <button onclick="editItem('${r.id}')" title="缂栬緫">鉁忥笍</button>
-          <button onclick="copyAllAccounts('${r.id}')" title="澶嶅埗鍏ㄩ儴璐﹀彿瀵嗙爜">馃搵鍏ㄩ儴</button>
-          <button onclick="deleteItem('${r.id}')" title="鍒犻櫎">馃棏锔?/button>
+          <button onclick="editItem('${r.id}')" title="编辑">✏️</button>
+          <button onclick="copyAllAccounts('${r.id}')" title="复制全部账号密码">📋全部</button>
+          <button onclick="deleteItem('${r.id}')" title="删除">🗑️</button>
         </div>
       </div>
       <div class="card-body">
         <table class="accounts-table">
-          <thead><tr><th style="width:80px">骞冲彴</th><th>璐﹀彿</th><th>瀵嗙爜</th><th style="width:70px">澶嶅埗</th><th style="width:80px">鐘舵€?/th></tr></thead>
+          <thead><tr><th style="width:80px">平台</th><th>账号</th><th>密码</th><th style="width:70px">复制</th><th style="width:80px">状态</th></tr></thead>
           <tbody>${tr}</tbody>
         </table>
       </div>
@@ -320,9 +320,9 @@ function render(){
   if(totalPages>1){
     let s=Math.max(1,page-3),e=Math.min(totalPages,s+6);
     if(e-s+1<7)s=Math.max(1,e-6);
-    if(page>1)pp+=`<button onclick="goPage(${page-1})">鈥?/button>`;
+    if(page>1)pp+=`<button onclick="goPage(${page-1})">‹</button>`;
     for(let i=s;i<=e;i++)pp+=`<button class="${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
-    if(page<totalPages)pp+=`<button onclick="goPage(${page+1})">鈥?/button>`;
+    if(page<totalPages)pp+=`<button onclick="goPage(${page+1})">›</button>`;
   }
   document.getElementById('pagination').innerHTML=pp;
   updateSel();
@@ -332,33 +332,33 @@ function toggleCard(id){document.getElementById('card_'+id).classList.toggle('ex
 function toggleAll(){const e=document.querySelectorAll('.card.expanded').length;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('expanded',e===0))}
 
 function copyText(t){
-  navigator.clipboard.writeText(t).then(()=>toast('宸插鍒?)).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('宸插鍒?);
+  navigator.clipboard.writeText(t).then(()=>toast('已复制')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('已复制');
   });
 }
 function copyAllAccounts(id){
-  const r=data.find(d=>d.id===id);if(!r||!(r.platforms||[]).length)return toast('鏃犺处鍙锋暟鎹?);
+  const r=data.find(d=>d.id===id);if(!r||!(r.platforms||[]).length)return toast('无账号数据');
   const lines=(r.platforms||[]).map(p=>`${p.platform}\t${p.account||''}\t${p.password||''}`).join('\n');
-  copyText(lines);toast('宸插鍒跺叏閮?('+(r.platforms||[]).length+' 涓钩鍙?');
+  copyText(lines);toast('已复制全部 ('+(r.platforms||[]).length+' 个平台)');
 }
 
 function toggleStatus(id,idx){
   const r=data.find(d=>d.id===id);if(!r)return;
   const p=(r.platforms||[])[idx];if(!p)return;
-  const order=['鏃?,'宸蹭笅鍗?,'瀛︿範涓?,'宸插畬鎴?];const oi=order.indexOf(p.status||'鏃?);
+  const order=['无','已下单','学习中','已完成'];const oi=order.indexOf(p.status||'无');
   p.status=order[(oi+1)%order.length];save();render();
 }
 function copyPlatform(id,idx){
   const r=data.find(d=>d.id===id);if(!r)return;
   const p=(r.platforms||[])[idx];if(!p)return;
-  copyText((p.account||'')+' '+(p.password||''));toast('宸插鍒? '+p.platform);
+  copyText((p.account||'')+' '+(p.password||''));toast('已复制: '+p.platform);
 }
 
 function updateSel(){document.getElementById('selCount').textContent=document.querySelectorAll('.sel-cb:checked').length}
 function batchMode(){
   isBatchMode=!isBatchMode;
   document.getElementById('batchBar').classList.toggle('show',isBatchMode);
-  document.getElementById('batchBtn').textContent=isBatchMode?'鈽?閫€鍑烘壒閲?:'鈽?鎵归噺鎿嶄綔';
+  document.getElementById('batchBtn').textContent=isBatchMode?'☑ 退出批量':'☑ 批量操作';
   document.querySelectorAll('.sel-cb').forEach(cb=>cb.style.display=isBatchMode?'':'none');
   if(!isBatchMode)clearSelection();
 }
@@ -368,13 +368,13 @@ function getSel(){return[...document.querySelectorAll('.sel-cb:checked')].map(cb
 
 function deleteItem(id){
   const r=data.find(d=>d.id===id);
-  if(!confirm(`鍒犻櫎銆?{r?r.name:''}銆嶏紵`))return;
-  data=data.filter(d=>d.id!==id);save();render();toast('宸插垹闄?);
+  if(!confirm(`删除「${r?r.name:''}」？`))return;
+  data=data.filter(d=>d.id!==id);save();render();toast('已删除');
 }
 function batchDelete(){
-  const ids=getSel();if(!ids.length)return toast('璇峰厛閫夋嫨鏉＄洰');
-  if(!confirm(`鍒犻櫎 ${ids.length} 鏉★紵涓嶅彲鎭㈠銆俙))return;
-  data=data.filter(d=>!ids.includes(d.id));save();render();toast(`宸插垹闄?${ids.length} 鏉);
+  const ids=getSel();if(!ids.length)return toast('请先选择条目');
+  if(!confirm(`删除 ${ids.length} 条？不可恢复。`))return;
+  data=data.filter(d=>!ids.includes(d.id));save();render();toast(`已删除 ${ids.length} 条`);
   if(isBatchMode)batchMode();
 }
 
@@ -384,53 +384,53 @@ function deduplicate(){
     const k=x.name+'|'+(x.hospital||'')+'|'+(x.department||'')+'|'+(x.region||'')+'|'+(x.platforms||[]).map(p=>p.platform+'|'+p.account+'|'+p.password+'|'+(p.status||'')).sort().join('||');
     if(seen.has(k)){r++;continue}seen.add(k);nd.push(x);
   }
-  if(!r)return toast('娌℃湁瀹屽叏閲嶅鐨勬潯鐩?);
-  if(!confirm(`鍙戠幇 ${r} 鏉″畬鍏ㄩ噸澶嶏紝纭畾鍒犻櫎锛焋))return;
-  data=nd;save();render();toast(`宸插幓閲?${r} 鏉);
+  if(!r)return toast('没有完全重复的条目');
+  if(!confirm(`发现 ${r} 条完全重复，确定删除？`))return;
+  data=nd;save();render();toast(`已去重 ${r} 条`);
 }
 
 function editItem(id){editingIds=[id];const r=data.find(d=>d.id===id);openEdit(r)}
-function batchEdit(){const ids=getSel();if(!ids.length)return toast('璇峰厛閫夋嫨鏉＄洰');editingIds=ids;openEdit(null,true)}
+function batchEdit(){const ids=getSel();if(!ids.length)return toast('请先选择条目');editingIds=ids;openEdit(null,true)}
 function batchSetStatus(s){
-  const ids=getSel();if(!ids.length)return toast('璇峰厛閫夋嫨鏉＄洰');
-  if(!confirm(`灏?${ids.length} 鏉＄殑骞冲彴鐘舵€佸叏閮ㄨ涓恒€?{STATUS_LABEL[s]}銆嶏紵`))return;
-  const labels={'鏃?:'猬滄棤','宸蹭笅鍗?:'馃搵宸蹭笅鍗?,'瀛︿範涓?:'馃攧瀛︿範涓?,'宸插畬鎴?:'鉁呭凡瀹屾垚'};
+  const ids=getSel();if(!ids.length)return toast('请先选择条目');
+  if(!confirm(`将 ${ids.length} 条的平台状态全部设为「${STATUS_LABEL[s]}」？`))return;
+  const labels={'无':'⬜无','已下单':'📋已下单','学习中':'🔄学习中','已完成':'✅已完成'};
   ids.forEach(id=>{
     const r=data.find(d=>d.id===id);
     if(r)(r.platforms||[]).forEach(p=>p.status=s);
   });
-  save();render();toast(`宸叉洿鏂?${ids.length} 鏉′负 ${labels[s]}`);
+  save();render();toast(`已更新 ${ids.length} 条为 ${labels[s]}`);
   if(isBatchMode)batchMode();
 }
-function platOpts(s){return['鍙屽崼','鍖诲崥澹?,'鍏渶绉戠洰','涓惧悕','24灏忔椂'].map(p=>`<option value="${p}" ${p===s?'selected':''}>${p}</option>`).join('')}
+function platOpts(s){return['双卫','医博士','公需科目','举名','24小时'].map(p=>`<option value="${p}" ${p===s?'selected':''}>${p}</option>`).join('')}
 let pc=100;
-function addPf(){pc++;const d=document.createElement('div');d.className='platform-entry';d.innerHTML=`<select id="pf_plat_${pc}">${platOpts('鍙屽崼')}</select><input id="pf_acc_${pc}" placeholder="璐﹀彿" style="width:110px"><input id="pf_pwd_${pc}" placeholder="瀵嗙爜" style="width:100px"><button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button>`;document.getElementById('pfList').appendChild(d)}
+function addPf(){pc++;const d=document.createElement('div');d.className='platform-entry';d.innerHTML=`<select id="pf_plat_${pc}">${platOpts('双卫')}</select><input id="pf_acc_${pc}" placeholder="账号" style="width:110px"><input id="pf_pwd_${pc}" placeholder="密码" style="width:100px"><button class="rm-pf" onclick="this.parentElement.remove()">✕</button>`;document.getElementById('pfList').appendChild(d)}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.getElementById('addModalOverlay')&&document.getElementById('addModalOverlay').classList.remove('open');editingIds=[]}
 
 function openEdit(record,isBatch){
   const m=document.getElementById('modalOverlay');const b=document.getElementById('modalBody');
-  document.getElementById('modalTitle').textContent=isBatch?`鎵归噺淇敼 ${editingIds.length} 鏉:'缂栬緫瀹㈡埛';
+  document.getElementById('modalTitle').textContent=isBatch?`批量修改 ${editingIds.length} 条`:'编辑客户';
   if(isBatch){
-    b.innerHTML=`<p style="color:#888;margin-bottom:12px;font-size:13px">鐣欑┖鍒欎笉淇敼</p>
-      <div class="form-group"><label>鍦板尯</label><input id="m_region" placeholder="鐣欑┖涓嶄慨鏀?></div>
-      <div class="form-group"><label>鍖婚櫌</label><input id="m_hospital" placeholder="鐣欑┖涓嶄慨鏀?></div>
-      <div class="form-group"><label>绉戝</label><input id="m_department" placeholder="鐣欑┖涓嶄慨鏀?></div>`;
+    b.innerHTML=`<p style="color:#888;margin-bottom:12px;font-size:13px">留空则不修改</p>
+      <div class="form-group"><label>地区</label><input id="m_region" placeholder="留空不修改"></div>
+      <div class="form-group"><label>医院</label><input id="m_hospital" placeholder="留空不修改"></div>
+      <div class="form-group"><label>科室</label><input id="m_department" placeholder="留空不修改"></div>`;
   }else if(record){
     const ps=(record.platforms||[]).map((p,i)=>`
       <div class="platform-entry">
         <select id="pf_plat_${i}">${platOpts(p.platform)}</select>
-        <input id="pf_acc_${i}" value="${esc(p.account||'')}" placeholder="璐﹀彿" style="width:110px">
-        <input id="pf_pwd_${i}" value="${esc(p.password||'')}" placeholder="瀵嗙爜" style="width:100px">
-        <button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button>
+        <input id="pf_acc_${i}" value="${esc(p.account||'')}" placeholder="账号" style="width:110px">
+        <input id="pf_pwd_${i}" value="${esc(p.password||'')}" placeholder="密码" style="width:100px">
+        <button class="rm-pf" onclick="this.parentElement.remove()">✕</button>
       </div>`).join('');
     b.innerHTML=`
-      <div class="form-group"><label>濮撳悕</label><input id="m_name" value="${esc(record.name)}"></div>
+      <div class="form-group"><label>姓名</label><input id="m_name" value="${esc(record.name)}"></div>
       <div class="form-row">
-        <div class="form-group"><label>鍦板尯</label><input id="m_region" value="${esc(record.region||'')}"></div>
-        <div class="form-group"><label>鍖婚櫌</label><input id="m_hospital" value="${esc(record.hospital||'')}"></div>
+        <div class="form-group"><label>地区</label><input id="m_region" value="${esc(record.region||'')}"></div>
+        <div class="form-group"><label>医院</label><input id="m_hospital" value="${esc(record.hospital||'')}"></div>
       </div>
-      <div class="form-group"><label>绉戝</label><input id="m_department" value="${esc(record.department||'')}"></div>
-      <div class="form-group"><label>璐﹀彿淇℃伅</label><div id="pfList">${ps}</div><button class="btn-add-pf" onclick="addPf()">+ 娣诲姞璐﹀彿</button></div>`;
+      <div class="form-group"><label>科室</label><input id="m_department" value="${esc(record.department||'')}"></div>
+      <div class="form-group"><label>账号信息</label><div id="pfList">${ps}</div><button class="btn-add-pf" onclick="addPf()">+ 添加账号</button></div>`;
   }
   m.classList.add('open');
 }
@@ -441,7 +441,7 @@ function saveModal(){
     const reg=document.getElementById('m_region').value.trim();const hos=document.getElementById('m_hospital').value.trim();const dep=document.getElementById('m_department').value.trim();
     let c=0;
     ids.forEach(id=>{const r=data.find(d=>d.id===id);if(!r)return;if(reg){r.region=reg;c++}if(hos){r.hospital=hos;c++}if(dep){r.department=dep;c++}});
-    closeModal();save();render();toast(`宸蹭慨鏀?${c} 涓瓧娈礰);
+    closeModal();save();render();toast(`已修改 ${c} 个字段`);
     if(isBatchMode)batchMode();return;
   }
   const id=ids[0];const r=data.find(d=>d.id===id);if(!r)return;
@@ -452,10 +452,10 @@ function saveModal(){
   const np=[];
   document.querySelectorAll('.platform-entry').forEach(el=>{
     const sel=el.querySelector('select');const acc=el.querySelector('input[id^="pf_acc_"]');const pwd=el.querySelector('input[id^="pf_pwd_"]');
-    if(sel&&acc&&sel.value&&acc.value.trim())np.push({platform:sel.value,account:acc.value.trim(),password:pwd?pwd.value.trim():'',status:'鏃?});
+    if(sel&&acc&&sel.value&&acc.value.trim())np.push({platform:sel.value,account:acc.value.trim(),password:pwd?pwd.value.trim():'',status:'无'});
   });
   if(np.length)r.platforms=np;
-  closeModal();save();render();toast('宸蹭繚瀛?);
+  closeModal();save();render();toast('已保存');
 }
 
 function importJSON(ev){
@@ -463,23 +463,23 @@ function importJSON(ev){
   const rd=new FileReader();
   rd.onload=function(e){
     try{
-      let d=JSON.parse(e.target.result);if(!Array.isArray(d))return toast('闇€瑕?JSON 鏁扮粍');
+      let d=JSON.parse(e.target.result);if(!Array.isArray(d))return toast('需要 JSON 数组');
       if(d.length&&d[0].platforms!==undefined)data=mergeByName(d);else data=mergeFlat(d);
-      cleanData();save();render();toast(`瀵煎叆 ${data.length} 鏉);
-    }catch(ex){toast('瀵煎叆澶辫触: '+ex.message)}
+      cleanData();save();render();toast(`导入 ${data.length} 条`);
+    }catch(ex){toast('导入失败: '+ex.message)}
   };
   rd.readAsText(f);ev.target.value='';
 }
 function exportJSON(){
-  if(!data.length)return toast('鏃犳暟鎹?);
+  if(!data.length)return toast('无数据');
   const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='client_data.json';a.click();URL.revokeObjectURL(b);toast('宸插鍑?);
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='client_data.json';a.click();URL.revokeObjectURL(b);toast('已导出');
 }
 function exportBackup(){
-  if(!data.length)return toast('鏃犳暟鎹?);
+  if(!data.length)return toast('无数据');
   const d=new Date();const ts=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'_'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0');
   const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='SW_澶囦唤_'+ts+'.json';a.click();URL.revokeObjectURL(b);toast('澶囦唤宸蹭笅杞?);
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='SW_备份_'+ts+'.json';a.click();URL.revokeObjectURL(b);toast('备份已下载');
 }
 document.addEventListener('dragover',e=>e.preventDefault());
 document.addEventListener('drop',function(e){
@@ -488,28 +488,28 @@ document.addEventListener('drop',function(e){
   const rd=new FileReader();
   rd.onload=function(ev){
     try{
-      let d=JSON.parse(ev.target.result);if(!Array.isArray(d))return toast('鏃犳晥 JSON');
+      let d=JSON.parse(ev.target.result);if(!Array.isArray(d))return toast('无效 JSON');
       if(d.length&&d[0].platforms!==undefined)data=mergeByName(d);else data=mergeFlat(d);
-      save();render();toast(`瀵煎叆 ${data.length} 鏉);
-    }catch(ex){toast('瑙ｆ瀽澶辫触')}
+      save();render();toast(`导入 ${data.length} 条`);
+    }catch(ex){toast('解析失败')}
   };
   rd.readAsText(f);
 });
 init();
 
-//===================== 鏂板瀹㈡埛 =====================
+//===================== 新增客户 =====================
 function openAddModal(){
-  document.getElementById('addModalTitle').textContent = '鏂板瀹㈡埛';
+  document.getElementById('addModalTitle').textContent = '新增客户';
   const b = document.getElementById('addModalBody');
-  b.innerHTML = '<div class="form-group"><label>濮撳悕 *</label><input id="af_name" placeholder="杈撳叆濮撳悕"></div>' +
-    '<div class="form-row"><div class="form-group"><label>鍦板尯</label><input id="af_region" placeholder="濡傦細鎴愰兘"></div>' +
-    '<div class="form-group"><label>鍖婚櫌</label><input id="af_hospital" placeholder="濡傦細褰窞甯備汉姘戝尰闄?></div></div>' +
-    '<div class="form-group"><label>绉戝</label><input id="af_dept" placeholder="濡傦細鏀惧皠绉?></div>' +
-    '<div class="form-group"><label>骞冲彴璐﹀彿</label><div id="af_pfList"><div class="platform-entry">' +
-    '<select><option>鍙屽崼</option><option>鍖诲崥澹?/option><option>鍏渶绉戠洰</option><option>涓惧悕</option><option>24灏忔椂</option></select>' +
-    '<input placeholder="璐﹀彿" style="flex:1"><input placeholder="瀵嗙爜" style="flex:1">' +
-    '<button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button></div></div>' +
-    '<button class="btn-add-pf" onclick="addPfEntry()">+ 娣诲姞骞冲彴</button>';
+  b.innerHTML = '<div class="form-group"><label>姓名 *</label><input id="af_name" placeholder="输入姓名"></div>' +
+    '<div class="form-row"><div class="form-group"><label>地区</label><input id="af_region" placeholder="如：成都"></div>' +
+    '<div class="form-group"><label>医院</label><input id="af_hospital" placeholder="如：彭州市人民医院"></div></div>' +
+    '<div class="form-group"><label>科室</label><input id="af_dept" placeholder="如：放射科"></div>' +
+    '<div class="form-group"><label>平台账号</label><div id="af_pfList"><div class="platform-entry">' +
+    '<select><option>双卫</option><option>医博士</option><option>公需科目</option><option>举名</option><option>24小时</option></select>' +
+    '<input placeholder="账号" style="flex:1"><input placeholder="密码" style="flex:1">' +
+    '<button class="rm-pf" onclick="this.parentElement.remove()">✕</button></div></div>' +
+    '<button class="btn-add-pf" onclick="addPfEntry()">+ 添加平台</button>';
   document.getElementById('addModalOverlay').classList.add('open');
 }
 function closeAddModal(){
@@ -518,13 +518,13 @@ function closeAddModal(){
 function addPfEntry(){
   const d = document.getElementById('af_pfList');
   d.insertAdjacentHTML('beforeend', '<div class="platform-entry">' +
-    '<select><option>鍙屽崼</option><option>鍖诲崥澹?/option><option>鍏渶绉戠洰</option><option>涓惧悕</option><option>24灏忔椂</option></select>' +
-    '<input placeholder="璐﹀彿" style="flex:1"><input placeholder="瀵嗙爜" style="flex:1">' +
-    '<button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button></div>');
+    '<select><option>双卫</option><option>医博士</option><option>公需科目</option><option>举名</option><option>24小时</option></select>' +
+    '<input placeholder="账号" style="flex:1"><input placeholder="密码" style="flex:1">' +
+    '<button class="rm-pf" onclick="this.parentElement.remove()">✕</button></div>');
 }
 function saveAddModal(){
   const name = document.getElementById('af_name').value.trim();
-  if(!name){toast('璇疯緭鍏ュ鍚?); return}
+  if(!name){toast('请输入姓名'); return}
   const region = document.getElementById('af_region').value.trim();
   const hospital = document.getElementById('af_hospital').value.trim();
   const dept = document.getElementById('af_dept').value.trim();
@@ -535,10 +535,10 @@ function saveAddModal(){
     const acc = inputs[0].value.trim();
     if(sel && acc){
       const pwd = inputs[1] ? inputs[1].value.trim() : '';
-      platforms.push({platform: sel.value, account: cleanAccount(acc), password: pwd, status: '鏃?});
+      platforms.push({platform: sel.value, account: cleanAccount(acc), password: pwd, status: '无'});
     }
   });
-  if(!platforms.length){toast('璇疯嚦灏戞坊鍔犱竴涓钩鍙拌处鍙?); return}
+  if(!platforms.length){toast('请至少添加一个平台账号'); return}
   data.push({
     id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
     name: name,
@@ -551,11 +551,11 @@ function saveAddModal(){
   save();
   closeAddModal();
   render();
-  toast('宸叉柊澧炲鎴? ' + name);
+  toast('已新增客户: ' + name);
 }
 
 
-//===================== 鈽侊笍 浜戝悓姝?=====================
+//===================== ☁️ 云同步 =====================
 var CLOUD_KEY = 'cloud_cfg';
 function cloudInit(){
   var cfg = localStorage.getItem(CLOUD_KEY);
@@ -564,15 +564,15 @@ function cloudInit(){
 }
 function updateCloudUI(loggedIn){
   var el = document.getElementById('cloudStatus');
-  if(el) el.innerHTML = loggedIn ? '<span style="color:#34a853">鈽侊笍 宸茬櫥褰?/span>' : '<span style="color:#999">鈽侊笍 鏈櫥褰?/span>';
+  if(el) el.innerHTML = loggedIn ? '<span style="color:#34a853">☁️ 已登录</span>' : '<span style="color:#999">☁️ 未登录</span>';
 }
 function showCloudLogin(){
   var cfg = localStorage.getItem(CLOUD_KEY);
   try{var c=cfg?JSON.parse(cfg):{}}catch(e){c={}}
   document.getElementById('cf_token').value = c.token || '';
   document.getElementById('cf_gist').value = c.gistId || '';
-  document.getElementById('cloudLog').textContent = c.token ? '宸查厤缃?Token锛屽彲涓婁紶鎴栦笅杞? : '璇疯緭鍏?GitHub Token';
-  document.getElementById('cloudModalTitle').textContent = '鈽侊笍 浜戝悓姝ヨ缃?;
+  document.getElementById('cloudLog').textContent = c.token ? '已配置 Token，可上传或下载' : '请输入 GitHub Token';
+  document.getElementById('cloudModalTitle').textContent = '☁️ 云同步设置';
   document.getElementById('cloudModalOverlay').classList.add('open');
 }
 function closeCloudModal(){
@@ -581,46 +581,46 @@ function closeCloudModal(){
 function cloudSave(){
   var token = document.getElementById('cf_token').value.trim();
   var gistId = document.getElementById('cf_gist').value.trim();
-  if(!token){log('璇疯緭鍏?GitHub Token'); return}
+  if(!token){log('请输入 GitHub Token'); return}
   localStorage.setItem(CLOUD_KEY, JSON.stringify({token: token, gistId: gistId}));
   updateCloudUI(true);
-  log('閰嶇疆宸蹭繚瀛?);
+  log('配置已保存');
 }
 function cloudLogout(){
-  if(!confirm('閫€鍑轰簯鍚屾锛?)) return;
+  if(!confirm('退出云同步？')) return;
   localStorage.removeItem(CLOUD_KEY);
   updateCloudUI(false);
   document.getElementById('cf_token').value = '';
   document.getElementById('cf_gist').value = '';
-  log('宸查€€鍑?);
+  log('已退出');
 }
 function cloudPush(){
   var cfg = getCloudCfg(); if(!cfg) return;
-  log('姝ｅ湪涓婁紶鏁版嵁鍒?GitHub...');
+  log('正在上传数据到 GitHub...');
   var jsonData = JSON.stringify(data, null, 2);
   if(cfg.gistId){
     updateGist(cfg, jsonData, function(){
-      log('鉁?涓婁紶鎴愬姛锛?);
-      toast('浜戝悓姝? 涓婁紶鎴愬姛');
+      log('✅ 上传成功！');
+      toast('云同步: 上传成功');
     });
   } else {
     createGist(cfg, jsonData, function(gistId){
       cfg.gistId = gistId;
       localStorage.setItem(CLOUD_KEY, JSON.stringify(cfg));
       document.getElementById('cf_gist').value = gistId;
-      log('鉁?宸插垱寤?Gist锛孖D: ' + gistId);
-      toast('浜戝悓姝? 宸插垱寤哄苟涓婁紶');
+      log('✅ 已创建 Gist，ID: ' + gistId);
+      toast('云同步: 已创建并上传');
     });
   }
 }
 function cloudPull(){
   var cfg = getCloudCfg(); if(!cfg) return;
-  if(!cfg.gistId){log('鉂?娌℃湁 Gist ID锛岃鍏堜笂浼犱竴娆℃垨濉啓宸叉湁 Gist ID'); return}
-  log('姝ｅ湪浠?GitHub 涓嬭浇鏁版嵁...');
+  if(!cfg.gistId){log('❌ 没有 Gist ID，请先上传一次或填写已有 Gist ID'); return}
+  log('正在从 GitHub 下载数据...');
   getGist(cfg, function(content){
     try{
       var remoteData = JSON.parse(content);
-      if(!Array.isArray(remoteData)){log('鉂?浜戠鏁版嵁鏍煎紡閿欒'); return}
+      if(!Array.isArray(remoteData)){log('❌ 云端数据格式错误'); return}
       // Merge with local
       var merged = mergeByName([...data, ...remoteData]);
       // Re-assign IDs for duplicates
@@ -628,21 +628,21 @@ function cloudPull(){
       cleanData();
       save();
       render();
-      log('鉁?涓嬭浇骞跺悎骞舵垚鍔燂紒鍏?' + data.length + ' 鏉?);
-      toast('浜戝悓姝? 涓嬭浇鎴愬姛');
+      log('✅ 下载并合并成功！共 ' + data.length + ' 条');
+      toast('云同步: 下载成功');
     }catch(e){
-      log('鉂?瑙ｆ瀽澶辫触: ' + e.message);
+      log('❌ 解析失败: ' + e.message);
     }
   });
 }
 function getCloudCfg(){
   var raw = localStorage.getItem(CLOUD_KEY);
-  if(!raw){log('鉂?璇峰厛閰嶇疆 GitHub Token'); return null}
+  if(!raw){log('❌ 请先配置 GitHub Token'); return null}
   try{
     var cfg = JSON.parse(raw);
-    if(!cfg.token){log('鉂?Token 涓虹┖'); return null}
+    if(!cfg.token){log('❌ Token 为空'); return null}
     return cfg;
-  }catch(e){log('鉂?閰嶇疆瑙ｆ瀽澶辫触'); return null}
+  }catch(e){log('❌ 配置解析失败'); return null}
 }
 function log(msg){
   var el = document.getElementById('cloudLog');
@@ -659,13 +659,13 @@ function createGist(cfg, content, cb){
       var resp = JSON.parse(xhr.responseText);
       cb(resp.id);
     } else {
-      log('鉂?鍒涘缓澶辫触: HTTP ' + xhr.status + ' ' + xhr.statusText);
+      log('❌ 创建失败: HTTP ' + xhr.status + ' ' + xhr.statusText);
       try{var e=JSON.parse(xhr.responseText);log('  ' + (e.message||''))}catch(ee){}
     }
   };
-  xhr.onerror = function(){log('鉂?缃戠粶璇锋眰澶辫触')};
+  xhr.onerror = function(){log('❌ 网络请求失败')};
   xhr.send(JSON.stringify({
-    description: '瀹㈡埛绠＄悊鏁版嵁 - client_manager',
+    description: '客户管理数据 - client_manager',
     public: false,
     files: {'client_data.json': {content: content}}
   }));
@@ -679,13 +679,13 @@ function updateGist(cfg, content, cb){
     if(xhr.status >= 200 && xhr.status < 300){
       cb();
     } else if(xhr.status === 404){
-      log('鉂?Gist 涓嶅瓨鍦紝璇烽噸鏂板垱寤?);
+      log('❌ Gist 不存在，请重新创建');
     } else {
-      log('鉂?涓婁紶澶辫触: HTTP ' + xhr.status + ' ' + xhr.statusText);
+      log('❌ 上传失败: HTTP ' + xhr.status + ' ' + xhr.statusText);
       try{var e=JSON.parse(xhr.responseText);log('  ' + (e.message||''))}catch(ee){}
     }
   };
-  xhr.onerror = function(){log('鉂?缃戠粶璇锋眰澶辫触')};
+  xhr.onerror = function(){log('❌ 网络请求失败')};
   xhr.send(JSON.stringify({
     files: {'client_data.json': {content: content}}
   }));
@@ -700,15 +700,15 @@ function getGist(cfg, cb){
         var resp = JSON.parse(xhr.responseText);
         var content = resp.files && resp.files['client_data.json'] && resp.files['client_data.json'].content;
         if(content) cb(content);
-        else log('鉂?鏈壘鍒?client_data.json 鏂囦欢');
-      }catch(e){log('鉂?瑙ｆ瀽鍝嶅簲澶辫触')}
+        else log('❌ 未找到 client_data.json 文件');
+      }catch(e){log('❌ 解析响应失败')}
     } else if(xhr.status === 404){
-      log('鉂?Gist 涓嶅瓨鍦?);
+      log('❌ Gist 不存在');
     } else {
-      log('鉂?涓嬭浇澶辫触: HTTP ' + xhr.status);
+      log('❌ 下载失败: HTTP ' + xhr.status);
     }
   };
-  xhr.onerror = function(){log('鉂?缃戠粶璇锋眰澶辫触')};
+  xhr.onerror = function(){log('❌ 网络请求失败')};
   xhr.send();
 }
 // Init cloud status on page load
@@ -717,4 +717,3 @@ function getGist(cfg, cb){
 </script>
 </body>
 </html>
-
