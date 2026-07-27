@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>客户信息管理</title>
+<title>瀹㈡埛淇℃伅绠＄悊</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f2f5;color:#333;font-size:14px}
@@ -89,92 +89,92 @@ input[type=file]{display:none}
 </head>
 <body>
 <div class="header">
-  <h1>📋 客户信息管理</h1>
-  <div class="stats" id="statsBar">共 <strong>0</strong> 条记录</div>
+  <h1>馃搵 瀹㈡埛淇℃伅绠＄悊</h1>
+  <div class="stats" id="statsBar">鍏?<strong>0</strong> 鏉¤褰?/div>
 </div>
 <div class="toolbar">
   <div id="filterBtns" style="display:flex;gap:4px">
-    <button class="filter-btn active" data-status="all" onclick="setFilter('all')">全部</button>
-    <button class="filter-btn" data-status="无" onclick="setFilter('无')">⬜无</button>
-    <button class="filter-btn" data-status="已下单" onclick="setFilter('已下单')">📋已下单</button>
-    <button class="filter-btn" data-status="学习中" onclick="setFilter('学习中')">🔄学习中</button>
-    <button class="filter-btn" data-status="已完成" onclick="setFilter('已完成')">✅已完成</button>
+    <button class="filter-btn active" data-status="all" onclick="setFilter('all')">鍏ㄩ儴</button>
+    <button class="filter-btn" data-status="鏃? onclick="setFilter('鏃?)">猬滄棤</button>
+    <button class="filter-btn" data-status="宸蹭笅鍗? onclick="setFilter('宸蹭笅鍗?)">馃搵宸蹭笅鍗?/button>
+    <button class="filter-btn" data-status="瀛︿範涓? onclick="setFilter('瀛︿範涓?)">馃攧瀛︿範涓?/button>
+    <button class="filter-btn" data-status="宸插畬鎴? onclick="setFilter('宸插畬鎴?)">鉁呭凡瀹屾垚</button>
   </div>
   <span style="color:#ccc;font-size:12px">|</span>
-  <button onclick="openAddModal()" class="primary" style="background:#34a853;color:#fff;border-color:#34a853;font-weight:500">＋新增</button>
- <button onclick="batchMode()" id="batchBtn">☑ 批量操作</button>
-  <button class="danger" onclick="deduplicate()">🧹 一键去重</button>
-  <label class="btn">📂 导入 JSON<input type="file" accept=".json" onchange="importJSON(event)"></label>
-  <button onclick="exportJSON()">💾 导出 JSON</button>
+  <button onclick="openAddModal()" class="primary" style="background:#34a853;color:#fff;border-color:#34a853;font-weight:500">锛嬫柊澧?/button>
+ <button onclick="batchMode()" id="batchBtn">鈽?鎵归噺鎿嶄綔</button>
+  <button class="danger" onclick="deduplicate()">馃Ч 涓€閿幓閲?/button>
+  <label class="btn">馃搨 瀵煎叆 JSON<input type="file" accept=".json" onchange="importJSON(event)"></label>
+  <button onclick="exportJSON()">馃捑 瀵煎嚭 JSON</button>
   <span style="color:#ccc;font-size:12px">|</span>
-  <button onclick="exportBackup()">📦 备份</button>
-  <span id="cloudStatus" style="font-size:12px;color:#666;display:inline-flex;align-items:center;gap:4px;cursor:pointer;margin-right:8px" onclick="showCloudLogin()">☁️ 未登录</span>
+  <button onclick="exportBackup()">馃摝 澶囦唤</button>
+  <span id="cloudStatus" style="font-size:12px;color:#666;display:inline-flex;align-items:center;gap:4px;cursor:pointer;margin-right:8px" onclick="showCloudLogin()">鈽侊笍 鏈櫥褰?/span>
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="搜索姓名/医院/平台..." oninput="render()">
+    <input type="text" id="searchInput" placeholder="鎼滅储濮撳悕/鍖婚櫌/骞冲彴..." oninput="render()">
   </div>
 </div>
 <div class="batch-bar" id="batchBar">
-  <span>已选 <span class="count" id="selCount">0</span> 条</span>
-  <button onclick="batchEdit()" class="primary">✏ 批量修改</button>
-  <button onclick="batchSetStatus('无')">⬜ 设为无</button>
-  <button onclick="batchSetStatus('已下单')">📋 设已下单</button>
-  <button onclick="batchSetStatus('学习中')">🔄 设学习中</button>
-  <button onclick="batchSetStatus('已完成')">✅ 设已完成</button>
-  <button onclick="batchDelete()" class="danger">🗑 批量删除</button>
-  <button onclick="selectAll()">☑ 全选</button>
-  <button onclick="clearSelection()">取消</button>
+  <span>宸查€?<span class="count" id="selCount">0</span> 鏉?/span>
+  <button onclick="batchEdit()" class="primary">鉁?鎵归噺淇敼</button>
+  <button onclick="batchSetStatus('鏃?)">猬?璁句负鏃?/button>
+  <button onclick="batchSetStatus('宸蹭笅鍗?)">馃搵 璁惧凡涓嬪崟</button>
+  <button onclick="batchSetStatus('瀛︿範涓?)">馃攧 璁惧涔犱腑</button>
+  <button onclick="batchSetStatus('宸插畬鎴?)">鉁?璁惧凡瀹屾垚</button>
+  <button onclick="batchDelete()" class="danger">馃棏 鎵归噺鍒犻櫎</button>
+  <button onclick="selectAll()">鈽?鍏ㄩ€?/button>
+  <button onclick="clearSelection()">鍙栨秷</button>
 </div>
 <div class="container" id="container"></div>
 <div class="pagination" id="pagination"></div>
 
 <div class="modal-overlay" id="cloudModalOverlay">
   <div class="modal">
-    <div class="modal-header"><span id="cloudModalTitle">☁️ 云同步设置</span><button class="close" onclick="closeCloudModal()">✕</button></div>
+    <div class="modal-header"><span id="cloudModalTitle">鈽侊笍 浜戝悓姝ヨ缃?/span><button class="close" onclick="closeCloudModal()">鉁?/button></div>
     <div class="modal-body" id="cloudModalBody">
-      <div class="form-group"><label>GitHub Token（个人访问令牌）</label>
+      <div class="form-group"><label>GitHub Token锛堜釜浜鸿闂护鐗岋級</label>
         <input id="cf_token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:9px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px">
-        <div style="font-size:11px;color:#999;margin-top:4px">需要 repo 和 gist 权限。&nbsp;<a href="https://github.com/settings/tokens" target="_blank" style="color:#1a73e8">去创建 →</a></div>
+        <div style="font-size:11px;color:#999;margin-top:4px">闇€瑕?repo 鍜?gist 鏉冮檺銆?nbsp;<a href="https://github.com/settings/tokens" target="_blank" style="color:#1a73e8">鍘诲垱寤?鈫?/a></div>
       </div>
-      <div class="form-group"><label>Gist ID（已创建过则自动填充）</label>
-        <input id="cf_gist" placeholder="留空自动创建新 Gist" style="width:100%;padding:9px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px">
+      <div class="form-group"><label>Gist ID锛堝凡鍒涘缓杩囧垯鑷姩濉厖锛?/label>
+        <input id="cf_gist" placeholder="鐣欑┖鑷姩鍒涘缓鏂?Gist" style="width:100%;padding:9px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px">
       </div>
       <div style="margin:12px 0;display:flex;gap:8px;flex-wrap:wrap">
-        <button onclick="cloudSave()" style="padding:8px 20px;background:#1a73e8;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">✓ 保存</button>
-        <button onclick="cloudPush()" style="padding:8px 20px;background:#34a853;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">☁️ 上传到云</button>
-        <button onclick="cloudPull()" style="padding:8px 20px;background:#f9ab00;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">☁️ 从云下载</button>
-        <button onclick="cloudLogout()" style="padding:8px 20px;background:#d32f2f;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">退出登录</button>
+        <button onclick="cloudSave()" style="padding:8px 20px;background:#1a73e8;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">鉁?淇濆瓨</button>
+        <button onclick="cloudPush()" style="padding:8px 20px;background:#34a853;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">鈽侊笍 涓婁紶鍒颁簯</button>
+        <button onclick="cloudPull()" style="padding:8px 20px;background:#f9ab00;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">鈽侊笍 浠庝簯涓嬭浇</button>
+        <button onclick="cloudLogout()" style="padding:8px 20px;background:#d32f2f;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">閫€鍑虹櫥褰?/button>
       </div>
-      <div id="cloudLog" style="font-size:12px;color:#666;background:#f5f5f5;padding:8px;border-radius:6px;max-height:200px;overflow-y:auto;white-space:pre-wrap;line-height:1.6">就绪</div>
+      <div id="cloudLog" style="font-size:12px;color:#666;background:#f5f5f5;padding:8px;border-radius:6px;max-height:200px;overflow-y:auto;white-space:pre-wrap;line-height:1.6">灏辩华</div>
     </div>
   </div>
 </div>
 
 <div class="modal-overlay" id="addModalOverlay">
   <div class="modal">
-    <div class="modal-header"><span id="addModalTitle">新增客户</span><button class="close" onclick="closeAddModal()">✕</button></div>
+    <div class="modal-header"><span id="addModalTitle">鏂板瀹㈡埛</span><button class="close" onclick="closeAddModal()">鉁?/button></div>
     <div class="modal-body" id="addModalBody"></div>
     <div class="modal-footer">
-      <button onclick="closeAddModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">取消</button>
-      <button onclick="saveAddModal()" style="padding:6px 18px;background:#34a853;color:#fff;border:none;border-radius:5px">保存</button>
+      <button onclick="closeAddModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">鍙栨秷</button>
+      <button onclick="saveAddModal()" style="padding:6px 18px;background:#34a853;color:#fff;border:none;border-radius:5px">淇濆瓨</button>
     </div>
   </div>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <div class="modal-header"><span id="modalTitle">编辑客户</span><button class="close" onclick="closeModal()">✕</button></div>
+    <div class="modal-header"><span id="modalTitle">缂栬緫瀹㈡埛</span><button class="close" onclick="closeModal()">鉁?/button></div>
     <div class="modal-body" id="modalBody"></div>
     <div class="modal-footer">
-      <button onclick="closeModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">取消</button>
-      <button onclick="saveModal()" style="padding:6px 18px;background:#1a73e8;color:#fff;border:none;border-radius:5px">保存</button>
+      <button onclick="closeModal()" style="padding:6px 18px;border:1px solid #ddd;border-radius:5px;background:#fff">鍙栨秷</button>
+      <button onclick="saveModal()" style="padding:6px 18px;background:#1a73e8;color:#fff;border:none;border-radius:5px">淇濆瓨</button>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-//===================== 内置数据 =====================
-const EMBEDDED_DATA = [{"id":"id_0001","name":"何志宏","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"举名","account":"18780039053","password":"Aa123456@"},{"platform":"公需科目","account":"18780039053","password":"He18780039053."}],"createdAt":"2026-07-26T01:21:17.575Z"},{"id":"id_0002","name":"陈玉玲","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"chen19950921","password":"Chen1995@"},{"platform":"公需科目","account":"13548089840","password":"He18780039053."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0003","name":"王宇恒","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"公需科目","account":"15756321869","password":"Wyh20160416!"},{"platform":"双卫","account":"15756321869","password":"Wyh20160416!"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0004","name":"宗庆铃","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"DudueFeather","password":"Mz120211825."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0005","name":"廖莎","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"15928762551","password":"lys130711"},{"platform":"公需科目","account":"15928762551","password":"Lys130711-1"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0006","name":"滕建国","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"510902197712259015","password":"teng781225"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0007","name":"曹帅","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"17360134996","password":"cs17360134996"},{"platform":"公需科目","account":"17360134996","password":"Cs17360134996."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0008","name":"李想","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"公需科目","account":"18380456949","password":"Lx498977317@"},{"platform":"双卫","account":"18380456949","password":"Lx498977317@"},{"platform":"24小时","account":"18380456949","password":"IX498977317@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0009","name":"赵青","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"13568981783","password":"zq537700"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0010","name":"彭霞","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"18328079362","password":"pengxia960130"},{"platform":"公需科目","account":"18328079362","password":"Px&960130"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0011","name":"杨迪","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"15982475989","password":"123456.yd"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0012","name":"朱奎江","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"15928136083","password":"zkj691126."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0013","name":"吴辉","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"13668175831","password":"wh711116"},{"platform":"医博士","account":"wh711116","password":"Wh711116@"},{"platform":"公需科目","account":"13668175831","password":"Wuh929929@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0014","name":"于蓉","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"Yr863200","password":"Yr863200@"},{"platform":"公需科目","account":"13408525448","password":"Yr863200@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0015","name":"陈新悦","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"13540072051","password":"Swwmm000"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0016","name":"陈沁","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"18861407524","password":"yss127211"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0017","name":"王安磊","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"13438044379","password":"12345678"},{"platform":"公需科目","account":"13438044379","password":"Wang123！"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0018","name":"刘麒麟","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"a2358448752","password":"199825zxC@"},{"platform":"公需科目","account":"18160017858","password":"132818zxC."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0019","name":"余博","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"公需科目","account":"18281517427","password":"YUbo1995417*"},{"platform":"24小时","account":"18281517427","password":"yubo1995417"},{"platform":"双卫","account":"18281517427","password":"yubo1995417"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0020","name":"尹俊杰","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"24小时","account":"账号13881890145","password":"#Yjj13881890145"},{"platform":"双卫","account":"13881890145","password":"yjj13881890145"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0021","name":"杨文静","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"18280238213","password":"Tkx5201314&"},{"platform":"公需科目","account":"18280238213","password":"Tkx5201314&"},{"platform":"医博士","account":"ywj19901104","password":"Tkx5201314&"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0022","name":"刘洋州","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"公需科目","account":"18502820720","password":"Lyz@364599"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0023","name":"崔永亮","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"Cyl19810804","password":"Kdd060419$"},{"platform":"公需科目","account":"510182198108043827","password":"Cyl810804$"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0024","name":"周艳","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"zy19761105","password":"Zy115123$"},{"platform":"公需科目","account":"15828629597","password":"Zy115123#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0025","name":"胡文志","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"15008429023","password":"Aa123456@"},{"platform":"公需科目","account":"15008429023","password":"Hwh05261320$"},{"platform":"双卫","account":"15008429023","password":"Hwh05261320$"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0026","name":"杨超云","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"Y123123yy123yy","password":"Y123456y@"},{"platform":"双卫","account":"17640290785","password":"123456"},{"platform":"24小时","account":"17640290785","password":"123456Ye@"},{"platform":"公需科目","account":"17640290785","password":"123456yyYY@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0027","name":"罗思毅","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"lsy183","password":"Aa123456@"},{"platform":"公需科目","account":"18380121353","password":"Lsy12345678@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0028","name":"欧阳婷雪","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"医博士","account":"Ouyangxue","password":"Ouyangxue.1129"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0029","name":"刘伟嘉","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"18380167469","password":"lwj19990320"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0030","name":"曾小波","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"24小时","account":"13980516908","password":"Zeng198671@"},{"platform":"公需科目","account":"13980516908","password":"Zeng198671@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0031","name":"彭文生","hospital":"彭州市人民医院","department":"急诊科","region":"成都","platforms":[{"platform":"双卫","account":"15884483073","password":"pws1983108"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0032","name":"罗本琼","hospital":"彭州市人民医院","department":"急诊科","region":"成都","platforms":[{"platform":"公需科目","account":"15008432869","password":"Lbq19791227@"},{"platform":"双卫","account":"15008432869","password":"lbq19791227@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0033","name":"黄楚婷","hospital":"彭州市人民医院","department":"急诊科","region":"成都","platforms":[{"platform":"公需科目","account":"13668260280","password":"Hct1997822@exo"},{"platform":"双卫","account":"13668260280","password":"hct1997822"},{"platform":"24小时","account":"13668260280","password":"hct1997822"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0034","name":"杨雨贝","hospital":"彭州市人民医院","department":"急诊科","region":"成都","platforms":[{"platform":"双卫","account":"13688373316","password":"Baby2003clover@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0035","name":"吴芮","hospital":"彭州市人民医院","department":"门诊部","region":"成都","platforms":[{"platform":"双卫","account":"15390070035","password":"wuloverui123"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0036","name":"王雅菲","hospital":"彭州市人民医院","department":"耳鼻喉科","region":"成都","platforms":[{"platform":"医博士","account":"wyf0807","password":"940807@Wyf"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0037","name":"李小勤","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"公需科目","account":"18702878722","password":"Lxq123123#"},{"platform":"双卫","account":"18702878722","password":"Lixiaoqing1990#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0038","name":"李列美","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"双卫","account":"13720428307","password":"LLMllm123.."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0039","name":"黄莉","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"医博士","account":"412702198310032725","password":"Aa123456@"},{"platform":"公需科目","account":"18780210952","password":"HLhl103103$"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0040","name":"魏菠","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"双卫","account":"账号18180779841","password":"Wb182838"},{"platform":"医博士","account":"18180779841","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0041","name":"魏波","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"双卫","account":"15828601379","password":"Jongsuk1022."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0042","name":"唐思佳","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"医博士","account":"peanutmiao","password":"qwe123A,"},{"platform":"公需科目","account":"13699028653","password":"qweasd123A，"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0043","name":"孙启蓉","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"双卫","account":"13730871312","password":"s@611819"},{"platform":"公需科目","account":"13730871312","password":"Sun@611819"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0044","name":"刘丽琼","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"医博士","account":"LiuLiuliqiong","password":"Llq870728@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0045","name":"钟辉","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"双卫","account":"13628022646","password":"zh123456"},{"platform":"公需科目","account":"13628022646","password":"Zh-123456"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0046","name":"柳小华","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"医博士","account":"lxhliuxiaohua","password":"Ljy@20110708"},{"platform":"公需科目","account":"510182198512236823","password":"Ljy@20110708"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0047","name":"郭婷","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"双卫","account":"18281732961","password":"1057781720g"},{"platform":"公需科目","account":"18281732961","password":"1057781720gL%"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0048","name":"冮忍","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"医博士","account":"Gr1203124277","password":"Gr1203124277$"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0049","name":"吴晓洁","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"医博士","account":"wuxiaojie669966","password":"Wuxiaojie?669966"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0050","name":"刘晓梅","hospital":"彭州市人民医院","department":"神内","region":"成都","platforms":[{"platform":"公需科目","account":"15982153575","password":"Lxm15982153575!"},{"platform":"双卫","account":"15982153575","password":"Lxm123456!"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0051","name":"廖芝富","hospital":"彭州市人民医院","department":"神内","region":"成都","platforms":[{"platform":"公需科目","account":"13880720774","password":"Lzf13880720774!"},{"platform":"双卫","account":"13880720774","password":"Lzf123456!"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0052","name":"付丽","hospital":"彭州市人民医院","department":"神内","region":"成都","platforms":[{"platform":"公需科目","account":"18200205272","password":"Fl87216800!!!"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0053","name":"周玉霞","hospital":"彭州市人民医院","department":"神内","region":"成都","platforms":[{"platform":"双卫","account":"13688059297","password":"Zyx1986820"},{"platform":"公需科目","account":"13688059297","password":"Gx123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0054","name":"罗晓鹤","hospital":"彭州市人民医院","department":"ICU","region":"成都","platforms":[{"platform":"双卫","account":"17716870657","password":"lxh871225"},{"platform":"公需科目","account":"15828569698","password":"Lxh871225*"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0055","name":"郭作隆","hospital":"彭州市人民医院","department":"神外","region":"成都","platforms":[{"platform":"公需科目","account":"15198084626","password":"Wspqa,1986"},{"platform":"双卫","account":"15198084626","password":"123456789"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0056","name":"杨丹","hospital":"彭州市人民医院","department":"神外","region":"成都","platforms":[{"platform":"双卫","account":"13880387926","password":"Yd952700"},{"platform":"公需科目","account":"13880387926","password":"Yd123441#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0057","name":"杨春煦","hospital":"彭州市人民医院","department":"耳鼻喉","region":"成都","platforms":[{"platform":"双卫","account":"15388152089","password":"123QWE"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0058","name":"李文","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"公需科目","account":"18081068598","password":"Aa123456@"},{"platform":"医博士","account":"510182198809144823","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0059","name":"胡姚春","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"公需科目","account":"18608019695","password":"Huyaochun860#"},{"platform":"双卫","account":"18608019695","password":"hyc860"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0060","name":"任燕","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"双卫","account":"18782976016","password":"Ry323232#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0061","name":"王丽","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"双卫","account":"14726189589","password":"zzg1314li521"},{"platform":"公需科目","account":"14726189589","password":"Zzg1314li521*"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0062","name":"李丹","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"公需科目","account":"18200522372","password":"Aa123456@"},{"platform":"双卫","account":"18200522372","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0063","name":"罗浣菱","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"双卫","account":"18380489265","password":"lhl197517"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0064","name":"阳敏玲","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"医博士","account":"用户名Yml123456","password":"Yml123456@"},{"platform":"双卫","account":"13980869940","password":"123456"},{"platform":"公需科目","account":"13980869940","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0065","name":"周佳","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"双卫","account":"18780200819","password":"Zj990605@"},{"platform":"公需科目","account":"18780200819","password":"Zj990605@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0066","name":"马宜雪","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"双卫","account":"18782456734","password":"108876"},{"platform":"公需科目","account":"18782456734","password":"Xiaoma2008#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0067","name":"邓玲","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"双卫","account":"15828132119","password":"Dl1989216"},{"platform":"公需科目","account":"15828132119","password":"Dl1989216!"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0068","name":"周衡","hospital":"彭州市人民医院","department":"感染科","region":"成都","platforms":[{"platform":"双卫","account":"18981723091","password":"zhou1355026"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0069","name":"刘鹏","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13880494911","password":"0011158lp"},{"platform":"公需科目","account":"13880494911","password":"0011158lP*"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0070","name":"罗鳗琳","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"15983839931","password":"Lxm2008617."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0071","name":"李丰航","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13880422088","password":"510182li"},{"platform":"公需科目","account":"51018219910506001X","password":"510182Li="}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0072","name":"周幸杰","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"医博士","account":"mrzxj123","password":"123Qazwsxedc."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0073","name":"刘欣","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"医博士","account":"liuxin005","password":"Liuxin1005."},{"platform":"公需科目","account":"18200395844","password":"Liuxin1005."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0074","name":"梁婷","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"医博士","account":"Liangdating","password":"Liangting1173$"},{"platform":"公需科目","account":"15202816765","password":"Liangting1173$"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0075","name":"周春娅","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"医博士","account":"Lydia322","password":"Zcy&gmc1212"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0076","name":"杨燕羽","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"15928798823","password":"Yyyhl822310!"},{"platform":"公需科目","account":"15928798823","password":"Yyyhl822310!"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0077","name":"朱会蓉","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"医博士","account":"15882160903","password":"Aa123456@"},{"platform":"双卫","account":"15882160903","password":"536340"},{"platform":"公需科目","account":"15882160903","password":"Abc12345678/"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0078","name":"陈茂华","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"公需科目","account":"13558886923","password":"Cmh6923!"},{"platform":"双卫","account":"13558886923","password":"13558886923"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0079","name":"简迪","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"15884446840","password":"ms19900316"},{"platform":"公需科目","account":"15884446840","password":"Ms19900316*"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0080","name":"肖成洋","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"15928503577","password":"xcy123456"},{"platform":"公需科目","account":"15928503577","password":"Xcy123123@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0081","name":"鲁雪","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"18030870321","password":"lx611930"},{"platform":"公需科目","account":"18030870321","password":"Lx611930."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0082","name":"李霞","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"举名","account":"13679048267","password":"Ck123456#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0083","name":"席孔亚","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"举名","account":"15828389427","password":"Xiaotang850238."},{"platform":"公需科目","account":"15828389427","password":"Xi850238."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0084","name":"扎西准","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13547946640","password":"Zxz282797545"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0085","name":"吴于昕","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13540866634","password":"sos135513"},{"platform":"公需科目","account":"13540866634","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0086","name":"颜月","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"15884530304","password":"QyQy93726"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0087","name":"廖珊","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"15881153297","password":"lss633"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0088","name":"郭晓莉","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"举名","account":"公需13668258402","password":"Ck666666#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0089","name":"邓玲","hospital":"彭州市人民医院","department":"儿科","region":"成都","platforms":[{"platform":"双卫","account":"15828132119","password":"dl1989216"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0090","name":"莫清华","hospital":"彭州市人民医院","department":"儿科","region":"成都","platforms":[{"platform":"医博士","account":"Wybs123456","password":"Ybs123456"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0091","name":"罗妙冰","hospital":"彭州市人民医院","department":"儿科","region":"成都","platforms":[{"platform":"举名","account":"15528227779","password":"1818,Rea"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0092","name":"张亮","hospital":"彭州市人民医院","department":"儿科","region":"成都","platforms":[{"platform":"双卫","account":"13458555652","password":"ZL1134"},{"platform":"公需科目","account":"13458555652","password":"Lp1134&&"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0093","name":"黄世蓉","hospital":"彭州市人民医院","department":"胸外科","region":"成都","platforms":[{"platform":"双卫","account":"15881154472","password":"580231"},{"platform":"公需科目","account":"15881154472","password":"15881154472Hsr$"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0094","name":"夏磊","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"18380498656","password":"Xialei1234"},{"platform":"24小时","account":"18380498656","password":"Xialei1234@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0095","name":"魏阳进","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"公需科目","account":"15881092314","password":"Yjjbsbnba23"},{"platform":"24小时","account":"小时15881092314","password":"Wy@147258369"},{"platform":"双卫","account":"15881092314","password":"147258369"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0096","name":"陈娅","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"13880970966","password":"cy19811024"},{"platform":"公需科目","account":"13880970966","password":"Cy13880970966@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0097","name":"王春梅","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"13982297082","password":"770913"},{"platform":"公需科目","account":"13982297082","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0098","name":"阙朝锦","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"举名","account":"13730819598","password":"Qcj@1977"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0099","name":"王黛雯","hospital":"彭州市人民医院","department":"手术室","region":"成都","platforms":[{"platform":"医博士","account":"51018219930523060X","password":"Wdw0523--"},{"platform":"公需科目","account":"15828602570","password":"Wdw712--"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0100","name":"谭瑶","hospital":"彭州市人民医院","department":"手术室","region":"成都","platforms":[{"platform":"双卫","account":"13982114011","password":"TY135410ty"},{"platform":"24小时","account":"13982114011","password":"Ty135410@"},{"platform":"公需科目","account":"13982114011","password":"TY135410ty@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0101","name":"黄丹","hospital":"彭州市人民医院","department":"手术室","region":"成都","platforms":[{"platform":"24小时","account":"18302860313","password":"Hd149393."},{"platform":"双卫","account":"18302860313","password":"Hd149393"},{"platform":"公需科目","account":"18302860313","password":"Hd149393."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0102","name":"李丹","hospital":"彭州市人民医院","department":"手术室","region":"成都","platforms":[{"platform":"双卫","account":"18200522372","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0103","name":"杨然","hospital":"彭州市人民医院","department":"手术室","region":"成都","platforms":[{"platform":"双卫","account":":15528275120","password":"yr429576"},{"platform":"公需科目","account":"15528275120","password":"Yr429576%"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0104","name":"李宁","hospital":"彭州市人民医院","department":"麻醉科","region":"成都","platforms":[{"platform":"双卫","account":"13981916499","password":"123456"},{"platform":"医博士","account":"Ln1981","password":"Ln123456"},{"platform":"公需科目","account":"13981916499","password":"Ln123456"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0105","name":"蒋昆","hospital":"彭州市人民医院","department":"麻醉科","region":"成都","platforms":[{"platform":"双卫","account":"13982082908","password":"123456"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0106","name":"李建芬","hospital":"彭州市人民医院","department":"麻醉科","region":"成都","platforms":[{"platform":"双卫","account":"13693499816","password":"123456"},{"platform":"医博士","account":"Ljf197203","password":"Ljf123456"},{"platform":"公需科目","account":"13693499816","password":"Ljf123456"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0107","name":"杨丽娟","hospital":"彭州市人民医院","department":"麻醉科","region":"成都","platforms":[{"platform":"医博士","account":"Ylj1983","password":"Ylj123456"},{"platform":"双卫","account":"13408621027","password":"123456"},{"platform":"公需科目","account":"13408621027","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0108","name":"张了云","hospital":"彭州市人民医院","department":"心内科","region":"成都","platforms":[{"platform":"双卫","account":"13980046465","password":"cloud1104"},{"platform":"公需科目","account":"13980046465","password":"Yun19941104."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0109","name":"赵强","hospital":"彭州市人民医院","department":"心内科","region":"成都","platforms":[{"platform":"举名","account":"13981732242","password":"Aa123456@"},{"platform":"公需科目","account":"13981732242","password":"858788@Abcd"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0110","name":"刘强","hospital":"彭州市人民医院","department":"心内科","region":"成都","platforms":[{"platform":"医博士","account":"qiang511","password":"qiang511Q@"},{"platform":"公需科目","account":"13438461591","password":"qiang511Q@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0111","name":"邓永华","hospital":"彭州市人民医院","department":"心内科","region":"成都","platforms":[{"platform":"医博士","account":"17683126809","password":"299992dyhDYH#"},{"platform":"公需科目","account":"17683126809","password":"299992dyhDYH#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0112","name":"张润","hospital":"彭州市人民医院","department":"肝胆外科","region":"成都","platforms":[{"platform":"24小时","account":"510182198707026826","password":"Zr123456@"},{"platform":"双卫","account":"13438903690","password":"198772zr"},{"platform":"公需科目","account":"13438903690","password":"880108Zr"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0113","name":"刘琴","hospital":"彭州市人民医院","department":"肝胆外科","region":"成都","platforms":[{"platform":"公需科目","account":"13980099232","password":"Lq99232#"},{"platform":"双卫","account":"13980099232","password":"Lq99232#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0114","name":"王绍荣","hospital":"彭州市人民医院","department":"消化内科","region":"成都","platforms":[{"platform":"医博士","account":"511303198607085112","password":"W_w198661"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0115","name":"况璐君","hospital":"彭州市人民医院","department":"消化内科","region":"成都","platforms":[{"platform":"公需科目","account":"13688324939","password":"Aa123456@"},{"platform":"双卫","account":"13688324939","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0116","name":"谭瑶","hospital":"彭州市人民医院","department":"胃肠外科","region":"成都","platforms":[{"platform":"双卫","account":"13982114011","password":"TY135410ty"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0117","name":"黄黎","hospital":"彭州市人民医院","department":"胃肠外科","region":"成都","platforms":[{"platform":"双卫","account":"15884534049","password":"l123456"},{"platform":"公需科目","account":"15884534049","password":"15884534049.Hl"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0118","name":"张中华","hospital":"妇幼保健院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"账号13608020983","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0119","name":"陆富会","hospital":"妇幼保健院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"18213048441","password":"Lufuhui789888"},{"platform":"公需科目","account":"18213048441","password":"Lufuhui@789888"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0120","name":"杨意群","hospital":"妇幼保健院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"15760084089","password":"084089aaaA"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0121","name":"肖林","hospital":"妇幼保健院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"15208219602","password":"x123456"},{"platform":"公需科目","account":"15208219602","password":"Jackwalk123."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0122","name":"尹帮峰","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"13548171750","password":"ybf19980527"},{"platform":"公需科目","account":"","password":"Ybf19980527#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0123","name":"陈怀","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"公需科目","account":"13981884345","password":"Ch110110@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0124","name":"魏春玲","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"13518108054","password":"Wcl123456"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0125","name":"陈祥","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"15387637618","password":"cx1234567890"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0126","name":"谭帮政","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"17760624733","password":"a123456"},{"platform":"公需科目","account":"17760624733","password":"Abc123456！"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0127","name":"王燕秋","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"17844617978","password":"qwe123456"},{"platform":"公需科目","account":"17844617978","password":"Qwe123456/"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0128","name":"曾杰","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"举名","account":"18508238763","password":"Zj19951103@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0129","name":"符晓慧","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"17608011859","password":"Merit510**"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0130","name":"黄志军","hospital":"郫县中医院","department":"","region":"成都","platforms":[{"platform":"医博士","account":"HZJ0901","password":"Hzj123456#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0131","name":"王千凤","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"举名","account":"18982106085","password":"06085Wqf."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0132","name":"王宇洁","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"18383555536","password":"Wangyujie0316@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0133","name":"杨夕摇","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"15002821646","password":"Xi.Yao.1987+"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0134","name":"李采玲","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"510184200010203426","password":"1234567890aA."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0135","name":"万子璇","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"18702885370","password":"Wan011039@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0136","name":"张鑫玥","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"17828090863","password":"Zxy0129yy&"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0137","name":"周新颖","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"18702846374","password":"Zxy19980702@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0138","name":"宋晓洁","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"510184198605230044","password":"100523Sxj@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0139","name":"杨芷微","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"510184199902053165","password":"Yzw123456."},{"platform":"医博士","account":"yzw666666","password":"Yzw123456@"},{"platform":"双卫","account":"510184199902053165","password":"Yzw666666"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0140","name":"杨云龙","hospital":"达州","department":"","region":"达州","platforms":[{"platform":"医博士","account":"yyl522532087","password":"YUNlmj000@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0141","name":"李万卿","hospital":"达州","department":"","region":"达州","platforms":[{"platform":"双卫","account":"18682814528","password":"lwqccc666"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0142","name":"赵志权","hospital":"达州","department":"","region":"达州","platforms":[{"platform":"双卫","account":"18208284621","password":"mm2601117387"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0143","name":"康栋","hospital":"达州","department":"","region":"达州","platforms":[{"platform":"双卫","account":"17828710019","password":"Kangdong1998"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0144","name":"刘宇慧","hospital":"峨眉山佛光医院","department":"","region":"成都","platforms":[{"platform":"举名","account":"13730764831","password":"Liuyuhui982594."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0145","name":"李金珂","hospital":"峨眉山佛光医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"13678190117","password":"Lijinke123@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0146","name":"叶眉","hospital":"成都东篱医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"15108425636","password":"ymyhs1986"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0147","name":"何先利","hospital":"西南医科大附属中医医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"18008214436","password":"Hxl181028"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0148","name":"付维文","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"24小时","account":"13547895710","password":"Fww520fww@"},{"platform":"医博士","account":"13547895710","password":"Fww520fww@"},{"platform":"公需科目","account":"","password":"Fww123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0149","name":"张尹","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"513423197411300026","password":"991206"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0150","name":"曹峰","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"13683400632","password":"cf711000"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0151","name":"郭贞芳","hospital":"彭州市人民医院","department":"放射 导管室","region":"成都","platforms":[{"platform":"双卫","account":"13708004785","password":"19840101guo"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0152","name":"胡晓玲","hospital":"彭州市人民医院","department":"输血科","region":"成都","platforms":[{"platform":"双卫","account":"13540066465","password":"82620812@Hxl"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0153","name":"邓雅玲","hospital":"彭州市人民医院","department":"耳鼻喉科","region":"成都","platforms":[{"platform":"双卫","account":"18780212092","password":"197232688dyl"},{"platform":"公需科目","account":"18780212092","password":"197232688dyL"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0154","name":"胥文丹","hospital":"彭州市人民医院","department":"耳鼻喉科","region":"成都","platforms":[{"platform":"双卫","account":"13458661078","password":"xuwendan1982"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0155","name":"李书瑶","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"医博士","account":"Lsy1022","password":"Lsy1022."},{"platform":"公需科目","account":"15828601379","password":"Jongsuk1022."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0156","name":"周莉","hospital":"彭州市人民医院","department":"老年科","region":"成都","platforms":[{"platform":"双卫","account":"13882044520","password":"Ccx811209@"},{"platform":"公需科目","account":"13882044520","password":"Ccx811209@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0157","name":"张小丽","hospital":"彭州市人民医院","department":"ICU","region":"成都","platforms":[{"platform":"双卫","account":"13540336551","password":"Lzf20121022@@"},{"platform":"公需科目","account":"13540336551","password":"Lzf20121022@@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0158","name":"彭倩","hospital":"彭州市人民医院","department":"肿瘤科","region":"成都","platforms":[{"platform":"双卫","account":"15884576778","password":"456321@Poi"},{"platform":"公需科目","account":"15884576778","password":"456321@Poi"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0159","name":"刘萍","hospital":"彭州市人民医院","department":"超声科","region":"成都","platforms":[{"platform":"双卫","account":"18382330276","password":"Csk22655"},{"platform":"公需科目","account":"18382330276","password":"Csk22655#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0160","name":"邓艳","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"医博士","account":"dengyan12345","password":"Dy-123456"},{"platform":"公需科目","account":"13408536723","password":"Dy-123456"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0161","name":"杨美琳","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"18628060293","password":"Yml123.."},{"platform":"公需科目","account":"18628060293","password":"Yml123.."}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0162","name":"杨源","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"举名","account":"13688197270","password":"Aa123456@"},{"platform":"公需科目","account":"13688197270","password":"Aa123456@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0163","name":"张丹","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13693419339","password":"zd123456"},{"platform":"公需科目","account":"13693419339","password":"Zd123456#"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0164","name":"陈果","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13540816902","password":"20050306Qtn"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0165","name":"罗效娟","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13880786930","password":"lxj810908"},{"platform":"公需科目","account":"13880786930","password":"Lxj810908@"}],"createdAt":"2026-07-26T01:21:17.576Z"},{"id":"id_0166","name":"龚玥","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"双卫","account":"13551366200","password":"Gy080213"},{"platform":"公需科目","account":"13551366200","password":"Gy080213%"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0167","name":"刘真培","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"举名","account":"18782905166","password":"1234Llzp@"},{"platform":"公需科目","account":"18782905166","password":"1234Llzp@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0168","name":"黄锦丽","hospital":"彭州市人民医院","department":"妇产科","region":"成都","platforms":[{"platform":"举名","account":"18780199057","password":"811213Hjl@"},{"platform":"公需科目","account":"18780199057","password":"811213Hjl@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0169","name":"廖展凡","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"公需科目","account":"15608013820","password":"940615@Zf"},{"platform":"举名","account":"15608013820","password":"940615@Zf"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0170","name":"贾杨婷","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"15928522058","password":"13308210159@Jyt"},{"platform":"公需科目","account":"15928522058","password":"13308210159@Jyt"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0171","name":"阮麟","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"13688438620","password":"13688438620"},{"platform":"公需科目","account":"13688438620","password":"13688438620Rl@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0172","name":"万秋伶","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"18909095458","password":"wan999"},{"platform":"公需科目","account":"18909095458","password":"Wanqiuling234&"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0173","name":"王方芳","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"13518140673","password":"13518140673Wff"},{"platform":"公需科目","account":"13518140673","password":"13518140673Wff@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0174","name":"叶红","hospital":"彭州市人民医院","department":"检验科","region":"成都","platforms":[{"platform":"双卫","account":"15828383196","password":"Ye123456"},{"platform":"公需科目","account":"15828383196","password":"Ye123456@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0175","name":"陈莉","hospital":"彭州市人民医院","department":"手术室-祥福护理","region":"成都","platforms":[{"platform":"双卫","account":"13551113671","password":"Aa13551113671%"},{"platform":"公需科目","account":"13551113671","password":"Aa13551113671%"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0176","name":"王玥雯","hospital":"彭州市人民医院","department":"麻醉科","region":"成都","platforms":[{"platform":"双卫","account":"15008250867","password":"5114wyw"},{"platform":"公需科目","account":"15008250867","password":"5114Wyw!"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0177","name":"张一弛","hospital":"彭州市人民医院","department":"胃肠外科","region":"成都","platforms":[{"platform":"双卫","account":"13550191021","password":"13550191021Zyc"},{"platform":"公需科目","account":"13550191021","password":"13550191021Zyc@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0178","name":"罗永胜","hospital":"彭州市人民医院","department":"胃肠外科","region":"成都","platforms":[{"platform":"双卫","account":"13541583662","password":"l123456"},{"platform":"举名","account":"13541583662","password":"Lys123456."},{"platform":"公需科目","account":"13541583662","password":"Lys123456."}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0179","name":"杜永刚","hospital":"彭州市人民医院","department":"胃肠外科","region":"成都","platforms":[{"platform":"双卫","account":"18628219495","password":"perry520"},{"platform":"公需科目","account":"18628219495","password":"Perry520@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0180","name":"石坤坤","hospital":"妇幼保健院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"18111550250","password":"Skk123456"},{"platform":"公需科目","account":"18111550250","password":"Skk123456$"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0181","name":"陈怀","hospital":"中医院","department":"骨科","region":"成都","platforms":[{"platform":"双卫","account":"13981884345","password":"110110"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0182","name":"马燕红","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"13518106808","password":"Ma123456!"},{"platform":"公需科目","account":"13518106808","password":"Ma123456!"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0183","name":"刘光奇","hospital":"中医院","department":"","region":"成都","platforms":[{"platform":"双卫","account":"13882039863","password":"Liu123456!"},{"platform":"公需科目","account":"13882039863","password":"Liu123456!"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0184","name":"李欣悦","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"15828105820","password":"19920506bbhEXO@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0185","name":"胡颖臻","hospital":"崇州中医院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"15680701219","password":"912169Zzyyhh."},{"platform":"双卫","account":"15680701219","password":"912169zzyyhh"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0186","name":"王移欢","hospital":"广元","department":"","region":"广元","platforms":[{"platform":"双卫","account":"17341606102","password":"994249"},{"platform":"公需科目","account":"510824199502110249","password":"264851"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0187","name":"俞敏","hospital":"广元","department":"","region":"广元","platforms":[{"platform":"公需科目","account":"510802199701020424","password":"19970102"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0188","name":"舒佳豪","hospital":"达州","department":"","region":"达州","platforms":[{"platform":"双卫","account":"18515708169","password":"404937236zxc"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0189","name":"何媛媛","hospital":"丽春卫生院","department":"","region":"成都","platforms":[{"platform":"24小时","account":"13540798242","password":"Love1996¥"},{"platform":"医博士","account":"L13540798242","password":"Love1996@"}],"createdAt":"2026-07-26T01:21:17.577Z"},{"id":"id_0190","name":"王瑶","hospital":"峨眉山佛光医院","department":"","region":"成都","platforms":[{"platform":"举名","account":"18228380656","password":"Wy19990320."}],"createdAt":"2026-07-26T01:21:17.577Z"}];
+//===================== 鍐呯疆鏁版嵁 =====================
+const EMBEDDED_DATA = [];
 
 //===================== DATA =====================
 let data = [];
@@ -186,7 +186,7 @@ let statusFilter = 'all'; // 'all' | 'none' | 'progress' | 'done'
 
 function cleanAccount(acc){
   if(!acc)return acc;
-  return String(acc).replace(/^(账号|用户名|小时)/,'');
+  return String(acc).replace(/^(璐﹀彿|鐢ㄦ埛鍚峾灏忔椂)/,'');
 }
 function init() {
   const saved = localStorage.getItem('client_mgr_v2');
@@ -217,7 +217,7 @@ function mergeFlat(flat){
     if(r.department&&!x.department)x.department=r.department;
     if(r.region&&!x.region)x.region=r.region;
     if(r.platform&&r.account&&!x.platforms.some(p=>p.platform===r.platform&&p.account===r.account))
-      x.platforms.push({platform:r.platform,account:r.account,password:r.password||'',status:r.status||'无'});
+      x.platforms.push({platform:r.platform,account:r.account,password:r.password||'',status:r.status||'鏃?});
   });
   return [...m.values()];
 }
@@ -243,7 +243,7 @@ function getFiltered(){
   if(q) re = re.filter(r=>(r.name+'|'+(r.hospital||'')+'|'+(r.department||'')+'|'+(r.region||'')+'|'+(r.platforms||[]).map(p=>p.platform+'|'+p.account).join('|')).toLowerCase().includes(q));
   // Status filter: show person if ANY platform matches the filter
   if(statusFilter!=='all'){
-    re = re.filter(r=>(r.platforms||[]).some(p=>(p.status||'无')===statusFilter));
+    re = re.filter(r=>(r.platforms||[]).some(p=>(p.status||'鏃?)===statusFilter));
   }
   return re;
 }
@@ -259,36 +259,36 @@ function getPage(){
   return{items:f.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE),total:f.length,totalPages:tp};
 }
 
-const STATUS_LABEL={'已完成':'✅已完成','无':'⬜无','已下单':'📋已下单','学习中':'🔄学习中'};
+const STATUS_LABEL={'宸插畬鎴?:'鉁呭凡瀹屾垚','鏃?:'猬滄棤','宸蹭笅鍗?:'馃搵宸蹭笅鍗?,'瀛︿範涓?:'馃攧瀛︿範涓?};
 
 function render(){
   const{items,total,totalPages}=getPage();
-  const totalNone=data.filter(r=>(r.platforms||[]).some(p=>(p.status||'无')==='无')).length;
-  const totalOrdered=data.filter(r=>(r.platforms||[]).some(p=>p.status==='已下单')).length;
-  const totalProgress=data.filter(r=>(r.platforms||[]).some(p=>p.status==='学习中')).length;
-  const totalDone=data.filter(r=>(r.platforms||[]).some(p=>p.status==='已完成')).length;
-  document.getElementById('statsBar').innerHTML=`共 <strong>${data.length}</strong> 条，⬜<strong>${totalNone}</strong> 📋<strong>${totalOrdered}</strong> 🔄<strong>${totalProgress}</strong> ✅<strong>${totalDone}</strong>，筛选后 <strong>${total}</strong> 条`;
+  const totalNone=data.filter(r=>(r.platforms||[]).some(p=>(p.status||'鏃?)==='鏃?)).length;
+  const totalOrdered=data.filter(r=>(r.platforms||[]).some(p=>p.status==='宸蹭笅鍗?)).length;
+  const totalProgress=data.filter(r=>(r.platforms||[]).some(p=>p.status==='瀛︿範涓?)).length;
+  const totalDone=data.filter(r=>(r.platforms||[]).some(p=>p.status==='宸插畬鎴?)).length;
+  document.getElementById('statsBar').innerHTML=`鍏?<strong>${data.length}</strong> 鏉★紝猬?strong>${totalNone}</strong> 馃搵<strong>${totalOrdered}</strong> 馃攧<strong>${totalProgress}</strong> 鉁?strong>${totalDone}</strong>锛岀瓫閫夊悗 <strong>${total}</strong> 鏉;
   const c=document.getElementById('container');
   if(!items.length){
-    c.innerHTML=`<div class="empty-state"><div class="icon">📂</div><p>暂无数据 — 导入 JSON 开始管理</p></div>`;
+    c.innerHTML=`<div class="empty-state"><div class="icon">馃搨</div><p>鏆傛棤鏁版嵁 鈥?瀵煎叆 JSON 寮€濮嬬鐞?/p></div>`;
     document.getElementById('pagination').innerHTML='';return;
   }
   let html='';
   items.forEach(r=>{
     const pfs=r.platforms||[];
     const tr=pfs.map((p,i)=>{
-      const sk=p.status||'无';
+      const sk=p.status||'鏃?;
       return `<tr>
         <td>${esc(p.platform)}</td>
-        <td><span class="acc-text">${esc(p.account||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.account)}')">📋</span></td>
-        <td><span class="pwd-text">${esc(p.password||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.password)}')">📋</span></td>
-        <td><span class="btn-copy" onclick="copyPlatform('${r.id}',${i})">整合复制</span></td>
+        <td><span class="acc-text">${esc(p.account||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.account)}')">馃搵</span></td>
+        <td><span class="pwd-text">${esc(p.password||'')}</span> <span class="btn-copy" onclick="copyText('${esc(p.password)}')">馃搵</span></td>
+        <td><span class="btn-copy" onclick="copyPlatform('${r.id}',${i})">鏁村悎澶嶅埗</span></td>
         <td><span class="status-badge status-${sk}" onclick="toggleStatus('${r.id}',${i})">${STATUS_LABEL[sk]||sk}</span></td>
       </tr>`;
     }).join('');
-    const dpt=r.department?`<span class="meta-tag">📋 ${esc(r.department)}</span>`:'';
-    const hos=r.hospital?`<span class="meta-tag">🏥 ${esc(r.hospital)}</span>`:'';
-    const reg=r.region?`<span class="meta-tag">📍 ${esc(r.region)}</span>`:'';
+    const dpt=r.department?`<span class="meta-tag">馃搵 ${esc(r.department)}</span>`:'';
+    const hos=r.hospital?`<span class="meta-tag">馃彞 ${esc(r.hospital)}</span>`:'';
+    const reg=r.region?`<span class="meta-tag">馃搷 ${esc(r.region)}</span>`:'';
     html+=`<div class="card" id="card_${r.id}">
       <div class="card-header" onclick="toggleCard('${r.id}')">
         <div class="cb-wrap" onclick="event.stopPropagation()">
@@ -297,19 +297,19 @@ function render(){
         <div class="info">
           <div class="name-row">
             <span class="name">${esc(r.name)}</span>
-            <span style="font-size:11px;color:#aaa">${pfs.length} 平台</span>
+            <span style="font-size:11px;color:#aaa">${pfs.length} 骞冲彴</span>
           </div>
           <div class="meta-tags">${reg}${hos}${dpt}</div>
         </div>
         <div class="action-btns" onclick="event.stopPropagation()">
-          <button onclick="editItem('${r.id}')" title="编辑">✏️</button>
-          <button onclick="copyAllAccounts('${r.id}')" title="复制全部账号密码">📋全部</button>
-          <button onclick="deleteItem('${r.id}')" title="删除">🗑️</button>
+          <button onclick="editItem('${r.id}')" title="缂栬緫">鉁忥笍</button>
+          <button onclick="copyAllAccounts('${r.id}')" title="澶嶅埗鍏ㄩ儴璐﹀彿瀵嗙爜">馃搵鍏ㄩ儴</button>
+          <button onclick="deleteItem('${r.id}')" title="鍒犻櫎">馃棏锔?/button>
         </div>
       </div>
       <div class="card-body">
         <table class="accounts-table">
-          <thead><tr><th style="width:80px">平台</th><th>账号</th><th>密码</th><th style="width:70px">复制</th><th style="width:80px">状态</th></tr></thead>
+          <thead><tr><th style="width:80px">骞冲彴</th><th>璐﹀彿</th><th>瀵嗙爜</th><th style="width:70px">澶嶅埗</th><th style="width:80px">鐘舵€?/th></tr></thead>
           <tbody>${tr}</tbody>
         </table>
       </div>
@@ -320,9 +320,9 @@ function render(){
   if(totalPages>1){
     let s=Math.max(1,page-3),e=Math.min(totalPages,s+6);
     if(e-s+1<7)s=Math.max(1,e-6);
-    if(page>1)pp+=`<button onclick="goPage(${page-1})">‹</button>`;
+    if(page>1)pp+=`<button onclick="goPage(${page-1})">鈥?/button>`;
     for(let i=s;i<=e;i++)pp+=`<button class="${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
-    if(page<totalPages)pp+=`<button onclick="goPage(${page+1})">›</button>`;
+    if(page<totalPages)pp+=`<button onclick="goPage(${page+1})">鈥?/button>`;
   }
   document.getElementById('pagination').innerHTML=pp;
   updateSel();
@@ -332,33 +332,33 @@ function toggleCard(id){document.getElementById('card_'+id).classList.toggle('ex
 function toggleAll(){const e=document.querySelectorAll('.card.expanded').length;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('expanded',e===0))}
 
 function copyText(t){
-  navigator.clipboard.writeText(t).then(()=>toast('已复制')).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('已复制');
+  navigator.clipboard.writeText(t).then(()=>toast('宸插鍒?)).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('宸插鍒?);
   });
 }
 function copyAllAccounts(id){
-  const r=data.find(d=>d.id===id);if(!r||!(r.platforms||[]).length)return toast('无账号数据');
+  const r=data.find(d=>d.id===id);if(!r||!(r.platforms||[]).length)return toast('鏃犺处鍙锋暟鎹?);
   const lines=(r.platforms||[]).map(p=>`${p.platform}\t${p.account||''}\t${p.password||''}`).join('\n');
-  copyText(lines);toast('已复制全部 ('+(r.platforms||[]).length+' 个平台)');
+  copyText(lines);toast('宸插鍒跺叏閮?('+(r.platforms||[]).length+' 涓钩鍙?');
 }
 
 function toggleStatus(id,idx){
   const r=data.find(d=>d.id===id);if(!r)return;
   const p=(r.platforms||[])[idx];if(!p)return;
-  const order=['无','已下单','学习中','已完成'];const oi=order.indexOf(p.status||'无');
+  const order=['鏃?,'宸蹭笅鍗?,'瀛︿範涓?,'宸插畬鎴?];const oi=order.indexOf(p.status||'鏃?);
   p.status=order[(oi+1)%order.length];save();render();
 }
 function copyPlatform(id,idx){
   const r=data.find(d=>d.id===id);if(!r)return;
   const p=(r.platforms||[])[idx];if(!p)return;
-  copyText((p.account||'')+' '+(p.password||''));toast('已复制: '+p.platform);
+  copyText((p.account||'')+' '+(p.password||''));toast('宸插鍒? '+p.platform);
 }
 
 function updateSel(){document.getElementById('selCount').textContent=document.querySelectorAll('.sel-cb:checked').length}
 function batchMode(){
   isBatchMode=!isBatchMode;
   document.getElementById('batchBar').classList.toggle('show',isBatchMode);
-  document.getElementById('batchBtn').textContent=isBatchMode?'☑ 退出批量':'☑ 批量操作';
+  document.getElementById('batchBtn').textContent=isBatchMode?'鈽?閫€鍑烘壒閲?:'鈽?鎵归噺鎿嶄綔';
   document.querySelectorAll('.sel-cb').forEach(cb=>cb.style.display=isBatchMode?'':'none');
   if(!isBatchMode)clearSelection();
 }
@@ -368,13 +368,13 @@ function getSel(){return[...document.querySelectorAll('.sel-cb:checked')].map(cb
 
 function deleteItem(id){
   const r=data.find(d=>d.id===id);
-  if(!confirm(`删除「${r?r.name:''}」？`))return;
-  data=data.filter(d=>d.id!==id);save();render();toast('已删除');
+  if(!confirm(`鍒犻櫎銆?{r?r.name:''}銆嶏紵`))return;
+  data=data.filter(d=>d.id!==id);save();render();toast('宸插垹闄?);
 }
 function batchDelete(){
-  const ids=getSel();if(!ids.length)return toast('请先选择条目');
-  if(!confirm(`删除 ${ids.length} 条？不可恢复。`))return;
-  data=data.filter(d=>!ids.includes(d.id));save();render();toast(`已删除 ${ids.length} 条`);
+  const ids=getSel();if(!ids.length)return toast('璇峰厛閫夋嫨鏉＄洰');
+  if(!confirm(`鍒犻櫎 ${ids.length} 鏉★紵涓嶅彲鎭㈠銆俙))return;
+  data=data.filter(d=>!ids.includes(d.id));save();render();toast(`宸插垹闄?${ids.length} 鏉);
   if(isBatchMode)batchMode();
 }
 
@@ -384,53 +384,53 @@ function deduplicate(){
     const k=x.name+'|'+(x.hospital||'')+'|'+(x.department||'')+'|'+(x.region||'')+'|'+(x.platforms||[]).map(p=>p.platform+'|'+p.account+'|'+p.password+'|'+(p.status||'')).sort().join('||');
     if(seen.has(k)){r++;continue}seen.add(k);nd.push(x);
   }
-  if(!r)return toast('没有完全重复的条目');
-  if(!confirm(`发现 ${r} 条完全重复，确定删除？`))return;
-  data=nd;save();render();toast(`已去重 ${r} 条`);
+  if(!r)return toast('娌℃湁瀹屽叏閲嶅鐨勬潯鐩?);
+  if(!confirm(`鍙戠幇 ${r} 鏉″畬鍏ㄩ噸澶嶏紝纭畾鍒犻櫎锛焋))return;
+  data=nd;save();render();toast(`宸插幓閲?${r} 鏉);
 }
 
 function editItem(id){editingIds=[id];const r=data.find(d=>d.id===id);openEdit(r)}
-function batchEdit(){const ids=getSel();if(!ids.length)return toast('请先选择条目');editingIds=ids;openEdit(null,true)}
+function batchEdit(){const ids=getSel();if(!ids.length)return toast('璇峰厛閫夋嫨鏉＄洰');editingIds=ids;openEdit(null,true)}
 function batchSetStatus(s){
-  const ids=getSel();if(!ids.length)return toast('请先选择条目');
-  if(!confirm(`将 ${ids.length} 条的平台状态全部设为「${STATUS_LABEL[s]}」？`))return;
-  const labels={'无':'⬜无','已下单':'📋已下单','学习中':'🔄学习中','已完成':'✅已完成'};
+  const ids=getSel();if(!ids.length)return toast('璇峰厛閫夋嫨鏉＄洰');
+  if(!confirm(`灏?${ids.length} 鏉＄殑骞冲彴鐘舵€佸叏閮ㄨ涓恒€?{STATUS_LABEL[s]}銆嶏紵`))return;
+  const labels={'鏃?:'猬滄棤','宸蹭笅鍗?:'馃搵宸蹭笅鍗?,'瀛︿範涓?:'馃攧瀛︿範涓?,'宸插畬鎴?:'鉁呭凡瀹屾垚'};
   ids.forEach(id=>{
     const r=data.find(d=>d.id===id);
     if(r)(r.platforms||[]).forEach(p=>p.status=s);
   });
-  save();render();toast(`已更新 ${ids.length} 条为 ${labels[s]}`);
+  save();render();toast(`宸叉洿鏂?${ids.length} 鏉′负 ${labels[s]}`);
   if(isBatchMode)batchMode();
 }
-function platOpts(s){return['双卫','医博士','公需科目','举名','24小时'].map(p=>`<option value="${p}" ${p===s?'selected':''}>${p}</option>`).join('')}
+function platOpts(s){return['鍙屽崼','鍖诲崥澹?,'鍏渶绉戠洰','涓惧悕','24灏忔椂'].map(p=>`<option value="${p}" ${p===s?'selected':''}>${p}</option>`).join('')}
 let pc=100;
-function addPf(){pc++;const d=document.createElement('div');d.className='platform-entry';d.innerHTML=`<select id="pf_plat_${pc}">${platOpts('双卫')}</select><input id="pf_acc_${pc}" placeholder="账号" style="width:110px"><input id="pf_pwd_${pc}" placeholder="密码" style="width:100px"><button class="rm-pf" onclick="this.parentElement.remove()">✕</button>`;document.getElementById('pfList').appendChild(d)}
+function addPf(){pc++;const d=document.createElement('div');d.className='platform-entry';d.innerHTML=`<select id="pf_plat_${pc}">${platOpts('鍙屽崼')}</select><input id="pf_acc_${pc}" placeholder="璐﹀彿" style="width:110px"><input id="pf_pwd_${pc}" placeholder="瀵嗙爜" style="width:100px"><button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button>`;document.getElementById('pfList').appendChild(d)}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.getElementById('addModalOverlay')&&document.getElementById('addModalOverlay').classList.remove('open');editingIds=[]}
 
 function openEdit(record,isBatch){
   const m=document.getElementById('modalOverlay');const b=document.getElementById('modalBody');
-  document.getElementById('modalTitle').textContent=isBatch?`批量修改 ${editingIds.length} 条`:'编辑客户';
+  document.getElementById('modalTitle').textContent=isBatch?`鎵归噺淇敼 ${editingIds.length} 鏉:'缂栬緫瀹㈡埛';
   if(isBatch){
-    b.innerHTML=`<p style="color:#888;margin-bottom:12px;font-size:13px">留空则不修改</p>
-      <div class="form-group"><label>地区</label><input id="m_region" placeholder="留空不修改"></div>
-      <div class="form-group"><label>医院</label><input id="m_hospital" placeholder="留空不修改"></div>
-      <div class="form-group"><label>科室</label><input id="m_department" placeholder="留空不修改"></div>`;
+    b.innerHTML=`<p style="color:#888;margin-bottom:12px;font-size:13px">鐣欑┖鍒欎笉淇敼</p>
+      <div class="form-group"><label>鍦板尯</label><input id="m_region" placeholder="鐣欑┖涓嶄慨鏀?></div>
+      <div class="form-group"><label>鍖婚櫌</label><input id="m_hospital" placeholder="鐣欑┖涓嶄慨鏀?></div>
+      <div class="form-group"><label>绉戝</label><input id="m_department" placeholder="鐣欑┖涓嶄慨鏀?></div>`;
   }else if(record){
     const ps=(record.platforms||[]).map((p,i)=>`
       <div class="platform-entry">
         <select id="pf_plat_${i}">${platOpts(p.platform)}</select>
-        <input id="pf_acc_${i}" value="${esc(p.account||'')}" placeholder="账号" style="width:110px">
-        <input id="pf_pwd_${i}" value="${esc(p.password||'')}" placeholder="密码" style="width:100px">
-        <button class="rm-pf" onclick="this.parentElement.remove()">✕</button>
+        <input id="pf_acc_${i}" value="${esc(p.account||'')}" placeholder="璐﹀彿" style="width:110px">
+        <input id="pf_pwd_${i}" value="${esc(p.password||'')}" placeholder="瀵嗙爜" style="width:100px">
+        <button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button>
       </div>`).join('');
     b.innerHTML=`
-      <div class="form-group"><label>姓名</label><input id="m_name" value="${esc(record.name)}"></div>
+      <div class="form-group"><label>濮撳悕</label><input id="m_name" value="${esc(record.name)}"></div>
       <div class="form-row">
-        <div class="form-group"><label>地区</label><input id="m_region" value="${esc(record.region||'')}"></div>
-        <div class="form-group"><label>医院</label><input id="m_hospital" value="${esc(record.hospital||'')}"></div>
+        <div class="form-group"><label>鍦板尯</label><input id="m_region" value="${esc(record.region||'')}"></div>
+        <div class="form-group"><label>鍖婚櫌</label><input id="m_hospital" value="${esc(record.hospital||'')}"></div>
       </div>
-      <div class="form-group"><label>科室</label><input id="m_department" value="${esc(record.department||'')}"></div>
-      <div class="form-group"><label>账号信息</label><div id="pfList">${ps}</div><button class="btn-add-pf" onclick="addPf()">+ 添加账号</button></div>`;
+      <div class="form-group"><label>绉戝</label><input id="m_department" value="${esc(record.department||'')}"></div>
+      <div class="form-group"><label>璐﹀彿淇℃伅</label><div id="pfList">${ps}</div><button class="btn-add-pf" onclick="addPf()">+ 娣诲姞璐﹀彿</button></div>`;
   }
   m.classList.add('open');
 }
@@ -441,7 +441,7 @@ function saveModal(){
     const reg=document.getElementById('m_region').value.trim();const hos=document.getElementById('m_hospital').value.trim();const dep=document.getElementById('m_department').value.trim();
     let c=0;
     ids.forEach(id=>{const r=data.find(d=>d.id===id);if(!r)return;if(reg){r.region=reg;c++}if(hos){r.hospital=hos;c++}if(dep){r.department=dep;c++}});
-    closeModal();save();render();toast(`已修改 ${c} 个字段`);
+    closeModal();save();render();toast(`宸蹭慨鏀?${c} 涓瓧娈礰);
     if(isBatchMode)batchMode();return;
   }
   const id=ids[0];const r=data.find(d=>d.id===id);if(!r)return;
@@ -452,10 +452,10 @@ function saveModal(){
   const np=[];
   document.querySelectorAll('.platform-entry').forEach(el=>{
     const sel=el.querySelector('select');const acc=el.querySelector('input[id^="pf_acc_"]');const pwd=el.querySelector('input[id^="pf_pwd_"]');
-    if(sel&&acc&&sel.value&&acc.value.trim())np.push({platform:sel.value,account:acc.value.trim(),password:pwd?pwd.value.trim():'',status:'无'});
+    if(sel&&acc&&sel.value&&acc.value.trim())np.push({platform:sel.value,account:acc.value.trim(),password:pwd?pwd.value.trim():'',status:'鏃?});
   });
   if(np.length)r.platforms=np;
-  closeModal();save();render();toast('已保存');
+  closeModal();save();render();toast('宸蹭繚瀛?);
 }
 
 function importJSON(ev){
@@ -463,23 +463,23 @@ function importJSON(ev){
   const rd=new FileReader();
   rd.onload=function(e){
     try{
-      let d=JSON.parse(e.target.result);if(!Array.isArray(d))return toast('需要 JSON 数组');
+      let d=JSON.parse(e.target.result);if(!Array.isArray(d))return toast('闇€瑕?JSON 鏁扮粍');
       if(d.length&&d[0].platforms!==undefined)data=mergeByName(d);else data=mergeFlat(d);
-      cleanData();save();render();toast(`导入 ${data.length} 条`);
-    }catch(ex){toast('导入失败: '+ex.message)}
+      cleanData();save();render();toast(`瀵煎叆 ${data.length} 鏉);
+    }catch(ex){toast('瀵煎叆澶辫触: '+ex.message)}
   };
   rd.readAsText(f);ev.target.value='';
 }
 function exportJSON(){
-  if(!data.length)return toast('无数据');
+  if(!data.length)return toast('鏃犳暟鎹?);
   const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='client_data.json';a.click();URL.revokeObjectURL(b);toast('已导出');
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='client_data.json';a.click();URL.revokeObjectURL(b);toast('宸插鍑?);
 }
 function exportBackup(){
-  if(!data.length)return toast('无数据');
+  if(!data.length)return toast('鏃犳暟鎹?);
   const d=new Date();const ts=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'_'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0');
   const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='SW_备份_'+ts+'.json';a.click();URL.revokeObjectURL(b);toast('备份已下载');
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='SW_澶囦唤_'+ts+'.json';a.click();URL.revokeObjectURL(b);toast('澶囦唤宸蹭笅杞?);
 }
 document.addEventListener('dragover',e=>e.preventDefault());
 document.addEventListener('drop',function(e){
@@ -488,28 +488,28 @@ document.addEventListener('drop',function(e){
   const rd=new FileReader();
   rd.onload=function(ev){
     try{
-      let d=JSON.parse(ev.target.result);if(!Array.isArray(d))return toast('无效 JSON');
+      let d=JSON.parse(ev.target.result);if(!Array.isArray(d))return toast('鏃犳晥 JSON');
       if(d.length&&d[0].platforms!==undefined)data=mergeByName(d);else data=mergeFlat(d);
-      save();render();toast(`导入 ${data.length} 条`);
-    }catch(ex){toast('解析失败')}
+      save();render();toast(`瀵煎叆 ${data.length} 鏉);
+    }catch(ex){toast('瑙ｆ瀽澶辫触')}
   };
   rd.readAsText(f);
 });
 init();
 
-//===================== 新增客户 =====================
+//===================== 鏂板瀹㈡埛 =====================
 function openAddModal(){
-  document.getElementById('addModalTitle').textContent = '新增客户';
+  document.getElementById('addModalTitle').textContent = '鏂板瀹㈡埛';
   const b = document.getElementById('addModalBody');
-  b.innerHTML = '<div class="form-group"><label>姓名 *</label><input id="af_name" placeholder="输入姓名"></div>' +
-    '<div class="form-row"><div class="form-group"><label>地区</label><input id="af_region" placeholder="如：成都"></div>' +
-    '<div class="form-group"><label>医院</label><input id="af_hospital" placeholder="如：彭州市人民医院"></div></div>' +
-    '<div class="form-group"><label>科室</label><input id="af_dept" placeholder="如：放射科"></div>' +
-    '<div class="form-group"><label>平台账号</label><div id="af_pfList"><div class="platform-entry">' +
-    '<select><option>双卫</option><option>医博士</option><option>公需科目</option><option>举名</option><option>24小时</option></select>' +
-    '<input placeholder="账号" style="flex:1"><input placeholder="密码" style="flex:1">' +
-    '<button class="rm-pf" onclick="this.parentElement.remove()">✕</button></div></div>' +
-    '<button class="btn-add-pf" onclick="addPfEntry()">+ 添加平台</button>';
+  b.innerHTML = '<div class="form-group"><label>濮撳悕 *</label><input id="af_name" placeholder="杈撳叆濮撳悕"></div>' +
+    '<div class="form-row"><div class="form-group"><label>鍦板尯</label><input id="af_region" placeholder="濡傦細鎴愰兘"></div>' +
+    '<div class="form-group"><label>鍖婚櫌</label><input id="af_hospital" placeholder="濡傦細褰窞甯備汉姘戝尰闄?></div></div>' +
+    '<div class="form-group"><label>绉戝</label><input id="af_dept" placeholder="濡傦細鏀惧皠绉?></div>' +
+    '<div class="form-group"><label>骞冲彴璐﹀彿</label><div id="af_pfList"><div class="platform-entry">' +
+    '<select><option>鍙屽崼</option><option>鍖诲崥澹?/option><option>鍏渶绉戠洰</option><option>涓惧悕</option><option>24灏忔椂</option></select>' +
+    '<input placeholder="璐﹀彿" style="flex:1"><input placeholder="瀵嗙爜" style="flex:1">' +
+    '<button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button></div></div>' +
+    '<button class="btn-add-pf" onclick="addPfEntry()">+ 娣诲姞骞冲彴</button>';
   document.getElementById('addModalOverlay').classList.add('open');
 }
 function closeAddModal(){
@@ -518,13 +518,13 @@ function closeAddModal(){
 function addPfEntry(){
   const d = document.getElementById('af_pfList');
   d.insertAdjacentHTML('beforeend', '<div class="platform-entry">' +
-    '<select><option>双卫</option><option>医博士</option><option>公需科目</option><option>举名</option><option>24小时</option></select>' +
-    '<input placeholder="账号" style="flex:1"><input placeholder="密码" style="flex:1">' +
-    '<button class="rm-pf" onclick="this.parentElement.remove()">✕</button></div>');
+    '<select><option>鍙屽崼</option><option>鍖诲崥澹?/option><option>鍏渶绉戠洰</option><option>涓惧悕</option><option>24灏忔椂</option></select>' +
+    '<input placeholder="璐﹀彿" style="flex:1"><input placeholder="瀵嗙爜" style="flex:1">' +
+    '<button class="rm-pf" onclick="this.parentElement.remove()">鉁?/button></div>');
 }
 function saveAddModal(){
   const name = document.getElementById('af_name').value.trim();
-  if(!name){toast('请输入姓名'); return}
+  if(!name){toast('璇疯緭鍏ュ鍚?); return}
   const region = document.getElementById('af_region').value.trim();
   const hospital = document.getElementById('af_hospital').value.trim();
   const dept = document.getElementById('af_dept').value.trim();
@@ -535,10 +535,10 @@ function saveAddModal(){
     const acc = inputs[0].value.trim();
     if(sel && acc){
       const pwd = inputs[1] ? inputs[1].value.trim() : '';
-      platforms.push({platform: sel.value, account: cleanAccount(acc), password: pwd, status: '无'});
+      platforms.push({platform: sel.value, account: cleanAccount(acc), password: pwd, status: '鏃?});
     }
   });
-  if(!platforms.length){toast('请至少添加一个平台账号'); return}
+  if(!platforms.length){toast('璇疯嚦灏戞坊鍔犱竴涓钩鍙拌处鍙?); return}
   data.push({
     id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
     name: name,
@@ -551,11 +551,11 @@ function saveAddModal(){
   save();
   closeAddModal();
   render();
-  toast('已新增客户: ' + name);
+  toast('宸叉柊澧炲鎴? ' + name);
 }
 
 
-//===================== ☁️ 云同步 =====================
+//===================== 鈽侊笍 浜戝悓姝?=====================
 var CLOUD_KEY = 'cloud_cfg';
 function cloudInit(){
   var cfg = localStorage.getItem(CLOUD_KEY);
@@ -564,15 +564,15 @@ function cloudInit(){
 }
 function updateCloudUI(loggedIn){
   var el = document.getElementById('cloudStatus');
-  if(el) el.innerHTML = loggedIn ? '<span style="color:#34a853">☁️ 已登录</span>' : '<span style="color:#999">☁️ 未登录</span>';
+  if(el) el.innerHTML = loggedIn ? '<span style="color:#34a853">鈽侊笍 宸茬櫥褰?/span>' : '<span style="color:#999">鈽侊笍 鏈櫥褰?/span>';
 }
 function showCloudLogin(){
   var cfg = localStorage.getItem(CLOUD_KEY);
   try{var c=cfg?JSON.parse(cfg):{}}catch(e){c={}}
   document.getElementById('cf_token').value = c.token || '';
   document.getElementById('cf_gist').value = c.gistId || '';
-  document.getElementById('cloudLog').textContent = c.token ? '已配置 Token，可上传或下载' : '请输入 GitHub Token';
-  document.getElementById('cloudModalTitle').textContent = '☁️ 云同步设置';
+  document.getElementById('cloudLog').textContent = c.token ? '宸查厤缃?Token锛屽彲涓婁紶鎴栦笅杞? : '璇疯緭鍏?GitHub Token';
+  document.getElementById('cloudModalTitle').textContent = '鈽侊笍 浜戝悓姝ヨ缃?;
   document.getElementById('cloudModalOverlay').classList.add('open');
 }
 function closeCloudModal(){
@@ -581,46 +581,46 @@ function closeCloudModal(){
 function cloudSave(){
   var token = document.getElementById('cf_token').value.trim();
   var gistId = document.getElementById('cf_gist').value.trim();
-  if(!token){log('请输入 GitHub Token'); return}
+  if(!token){log('璇疯緭鍏?GitHub Token'); return}
   localStorage.setItem(CLOUD_KEY, JSON.stringify({token: token, gistId: gistId}));
   updateCloudUI(true);
-  log('配置已保存');
+  log('閰嶇疆宸蹭繚瀛?);
 }
 function cloudLogout(){
-  if(!confirm('退出云同步？')) return;
+  if(!confirm('閫€鍑轰簯鍚屾锛?)) return;
   localStorage.removeItem(CLOUD_KEY);
   updateCloudUI(false);
   document.getElementById('cf_token').value = '';
   document.getElementById('cf_gist').value = '';
-  log('已退出');
+  log('宸查€€鍑?);
 }
 function cloudPush(){
   var cfg = getCloudCfg(); if(!cfg) return;
-  log('正在上传数据到 GitHub...');
+  log('姝ｅ湪涓婁紶鏁版嵁鍒?GitHub...');
   var jsonData = JSON.stringify(data, null, 2);
   if(cfg.gistId){
     updateGist(cfg, jsonData, function(){
-      log('✅ 上传成功！');
-      toast('云同步: 上传成功');
+      log('鉁?涓婁紶鎴愬姛锛?);
+      toast('浜戝悓姝? 涓婁紶鎴愬姛');
     });
   } else {
     createGist(cfg, jsonData, function(gistId){
       cfg.gistId = gistId;
       localStorage.setItem(CLOUD_KEY, JSON.stringify(cfg));
       document.getElementById('cf_gist').value = gistId;
-      log('✅ 已创建 Gist，ID: ' + gistId);
-      toast('云同步: 已创建并上传');
+      log('鉁?宸插垱寤?Gist锛孖D: ' + gistId);
+      toast('浜戝悓姝? 宸插垱寤哄苟涓婁紶');
     });
   }
 }
 function cloudPull(){
   var cfg = getCloudCfg(); if(!cfg) return;
-  if(!cfg.gistId){log('❌ 没有 Gist ID，请先上传一次或填写已有 Gist ID'); return}
-  log('正在从 GitHub 下载数据...');
+  if(!cfg.gistId){log('鉂?娌℃湁 Gist ID锛岃鍏堜笂浼犱竴娆℃垨濉啓宸叉湁 Gist ID'); return}
+  log('姝ｅ湪浠?GitHub 涓嬭浇鏁版嵁...');
   getGist(cfg, function(content){
     try{
       var remoteData = JSON.parse(content);
-      if(!Array.isArray(remoteData)){log('❌ 云端数据格式错误'); return}
+      if(!Array.isArray(remoteData)){log('鉂?浜戠鏁版嵁鏍煎紡閿欒'); return}
       // Merge with local
       var merged = mergeByName([...data, ...remoteData]);
       // Re-assign IDs for duplicates
@@ -628,21 +628,21 @@ function cloudPull(){
       cleanData();
       save();
       render();
-      log('✅ 下载并合并成功！共 ' + data.length + ' 条');
-      toast('云同步: 下载成功');
+      log('鉁?涓嬭浇骞跺悎骞舵垚鍔燂紒鍏?' + data.length + ' 鏉?);
+      toast('浜戝悓姝? 涓嬭浇鎴愬姛');
     }catch(e){
-      log('❌ 解析失败: ' + e.message);
+      log('鉂?瑙ｆ瀽澶辫触: ' + e.message);
     }
   });
 }
 function getCloudCfg(){
   var raw = localStorage.getItem(CLOUD_KEY);
-  if(!raw){log('❌ 请先配置 GitHub Token'); return null}
+  if(!raw){log('鉂?璇峰厛閰嶇疆 GitHub Token'); return null}
   try{
     var cfg = JSON.parse(raw);
-    if(!cfg.token){log('❌ Token 为空'); return null}
+    if(!cfg.token){log('鉂?Token 涓虹┖'); return null}
     return cfg;
-  }catch(e){log('❌ 配置解析失败'); return null}
+  }catch(e){log('鉂?閰嶇疆瑙ｆ瀽澶辫触'); return null}
 }
 function log(msg){
   var el = document.getElementById('cloudLog');
@@ -659,13 +659,13 @@ function createGist(cfg, content, cb){
       var resp = JSON.parse(xhr.responseText);
       cb(resp.id);
     } else {
-      log('❌ 创建失败: HTTP ' + xhr.status + ' ' + xhr.statusText);
+      log('鉂?鍒涘缓澶辫触: HTTP ' + xhr.status + ' ' + xhr.statusText);
       try{var e=JSON.parse(xhr.responseText);log('  ' + (e.message||''))}catch(ee){}
     }
   };
-  xhr.onerror = function(){log('❌ 网络请求失败')};
+  xhr.onerror = function(){log('鉂?缃戠粶璇锋眰澶辫触')};
   xhr.send(JSON.stringify({
-    description: '客户管理数据 - client_manager',
+    description: '瀹㈡埛绠＄悊鏁版嵁 - client_manager',
     public: false,
     files: {'client_data.json': {content: content}}
   }));
@@ -679,13 +679,13 @@ function updateGist(cfg, content, cb){
     if(xhr.status >= 200 && xhr.status < 300){
       cb();
     } else if(xhr.status === 404){
-      log('❌ Gist 不存在，请重新创建');
+      log('鉂?Gist 涓嶅瓨鍦紝璇烽噸鏂板垱寤?);
     } else {
-      log('❌ 上传失败: HTTP ' + xhr.status + ' ' + xhr.statusText);
+      log('鉂?涓婁紶澶辫触: HTTP ' + xhr.status + ' ' + xhr.statusText);
       try{var e=JSON.parse(xhr.responseText);log('  ' + (e.message||''))}catch(ee){}
     }
   };
-  xhr.onerror = function(){log('❌ 网络请求失败')};
+  xhr.onerror = function(){log('鉂?缃戠粶璇锋眰澶辫触')};
   xhr.send(JSON.stringify({
     files: {'client_data.json': {content: content}}
   }));
@@ -700,15 +700,15 @@ function getGist(cfg, cb){
         var resp = JSON.parse(xhr.responseText);
         var content = resp.files && resp.files['client_data.json'] && resp.files['client_data.json'].content;
         if(content) cb(content);
-        else log('❌ 未找到 client_data.json 文件');
-      }catch(e){log('❌ 解析响应失败')}
+        else log('鉂?鏈壘鍒?client_data.json 鏂囦欢');
+      }catch(e){log('鉂?瑙ｆ瀽鍝嶅簲澶辫触')}
     } else if(xhr.status === 404){
-      log('❌ Gist 不存在');
+      log('鉂?Gist 涓嶅瓨鍦?);
     } else {
-      log('❌ 下载失败: HTTP ' + xhr.status);
+      log('鉂?涓嬭浇澶辫触: HTTP ' + xhr.status);
     }
   };
-  xhr.onerror = function(){log('❌ 网络请求失败')};
+  xhr.onerror = function(){log('鉂?缃戠粶璇锋眰澶辫触')};
   xhr.send();
 }
 // Init cloud status on page load
@@ -717,3 +717,4 @@ function getGist(cfg, cb){
 </script>
 </body>
 </html>
+
