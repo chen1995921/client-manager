@@ -22,6 +22,18 @@ body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f2f5;c
 .toolbar .search-box{display:flex;gap:6px;margin-left:auto}
 .toolbar .search-box input{padding:5px 10px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;width:200px;outline:none}
 .toolbar .search-box input:focus{border-color:#1a73e8}
+.toolbar .divider{color:#ccc;font-size:12px;user-select:none}
+.toolbar select.platform-filter,
+.toolbar select.region-filter,
+.toolbar select.hospital-filter,
+.toolbar select.dept-filter{padding:5px 8px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;background:#fff;outline:none;max-width:160px;cursor:pointer}
+.toolbar select.platform-filter:focus,
+.toolbar select.region-filter:focus,
+.toolbar select.hospital-filter:focus,
+.toolbar select.dept-filter:focus{border-color:#1a73e8}
+.toolbar .filter-label{font-size:12px;color:#666;margin-left:2px}
+.toolbar .btn-clear-filter{font-size:12px;color:#1a73e8;background:none;border:none;cursor:pointer;padding:4px 6px}
+.toolbar .btn-clear-filter:hover{text-decoration:underline}
 .container{max-width:1400px;margin:0 auto;padding:14px 20px 80px}
 .card{background:#fff;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:10px}
 .card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)}
@@ -49,16 +61,18 @@ body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f2f5;c
 .action-btns{display:flex;gap:3px;flex-shrink:0}
 .action-btns button{padding:4px 8px;border:1px solid transparent;border-radius:4px;cursor:pointer;font-size:12px;background:transparent;color:#888}
 .action-btns button:hover{background:#f0f0f0;color:#333}
-.batch-bar{background:#e8f0fe;padding:7px 20px;display:none;align-items:center;gap:12px;font-size:13px;position:sticky;top:100px;z-index:98;border-bottom:1px solid #c5d9f5}
+.batch-bar{background:#e8f0fe;padding:7px 20px;display:none;align-items:center;gap:12px;font-size:13px;position:sticky;top:100px;z-index:98;border-bottom:1px solid #c5d9f5;flex-wrap:wrap}
 .batch-bar.show{display:flex}
 .batch-bar .count{font-weight:600;color:#1a73e8}
+.batch-bar .pf-sel{display:flex;align-items:center;gap:4px;font-size:12px;color:#1a73e8}
+.batch-bar .pf-sel select{padding:3px 6px;border:1px solid #c5d9f5;border-radius:4px;background:#fff;font-size:12px}
 .pagination{display:flex;justify-content:center;gap:5px;margin:16px 0;flex-wrap:wrap}
 .pagination button{padding:5px 12px;border:1px solid #ddd;border-radius:4px;background:#fff;cursor:pointer;font-size:13px}
 .pagination button.active{background:#1a73e8;color:#fff;border-color:#1a73e8}
 .pagination button:hover:not(.active){background:#f0f4ff}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;display:none;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:10px;width:90%;max-width:520px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.modal{background:#fff;border-radius:10px;width:90%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.2)}
 .modal-header{padding:14px 20px;border-bottom:1px solid #eee;font-size:16px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
 .modal-header .close{cursor:pointer;font-size:20px;color:#999;border:none;background:none}
 .modal-body{padding:20px}
@@ -70,20 +84,37 @@ body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f2f5;c
 .form-row{display:flex;gap:10px}
 .form-row .form-group{flex:1}
 .platform-entry{display:flex;gap:6px;align-items:center;margin-bottom:5px;flex-wrap:wrap}
+.platform-entry .plat-combo{position:relative;display:flex;align-items:center}
 .platform-entry select,.platform-entry input{padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px}
-.platform-entry .rm-pf{cursor:pointer;color:#d32f2f;border:none;background:none;font-size:16px}
+.platform-entry .rm-pf{cursor:pointer;color:#d32f2f;border:none;background:none;font-size:16px;padding:0 4px}
 .btn-add-pf{font-size:12px;color:#1a73e8;cursor:pointer;border:none;background:none;padding:3px 0}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#323232;color:#fff;padding:8px 20px;border-radius:6px;font-size:13px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none}
+.btn-add-pf:hover{text-decoration:underline}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#323232;color:#fff;padding:8px 20px;border-radius:6px;font-size:13px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none;max-width:80%;text-align:center}
 .toast.show{opacity:1}
 .empty-state{text-align:center;padding:60px 20px;color:#999}
 .empty-state .icon{font-size:48px;margin-bottom:10px}
 input[type=file]{display:none}
+.platform-mgr-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.platform-mgr-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 4px 3px 10px;background:#e8f0fe;color:#1a73e8;border-radius:14px;font-size:12px}
+.platform-mgr-chip .rename{cursor:pointer;color:#1a73e8;border:none;background:none;font-size:11px;padding:0 2px}
+.platform-mgr-chip .rename:hover{color:#1557b0;text-decoration:underline}
+.platform-mgr-chip .del{cursor:pointer;color:#d32f2f;border:none;background:none;font-size:14px;padding:0 4px;line-height:1}
+.platform-mgr-chip .del:hover{color:#b71c1c}
+.platform-mgr-add{display:flex;gap:6px;align-items:center}
+.platform-mgr-add input{flex:1;padding:5px 10px;border:1px solid #d0d0d0;border-radius:5px;font-size:13px;outline:none}
+.platform-mgr-add button{padding:5px 14px;background:#1a73e8;color:#fff;border:none;border-radius:5px;font-size:13px;cursor:pointer}
+.platform-mgr-add button:hover{background:#1557b0}
+.hint{font-size:11px;color:#999;margin-top:4px}
 @media(max-width:700px){
   .toolbar .search-box{margin-left:0;width:100%}
   .toolbar .search-box input{width:100%}
   .form-row{flex-direction:column;gap:0}
   .accounts-table{font-size:12px}
   .accounts-table th,.accounts-table td{padding:5px 6px}
+  .toolbar select.platform-filter,
+  .toolbar select.region-filter,
+  .toolbar select.hospital-filter,
+  .toolbar select.dept-filter{max-width:120px}
 }
 </style>
 </head>
@@ -100,13 +131,24 @@ input[type=file]{display:none}
     <button class="filter-btn" data-status="学习中" onclick="setFilter('学习中')">🔄学习中</button>
     <button class="filter-btn" data-status="已完成" onclick="setFilter('已完成')">✅已完成</button>
   </div>
-  <span style="color:#ccc;font-size:12px">|</span>
+  <span class="divider">|</span>
+  <span class="filter-label">平台</span>
+  <select class="platform-filter" id="filterPlatform" onchange="onDimFilterChange()"><option value="">全部平台</option></select>
+  <span class="filter-label">地区</span>
+  <select class="region-filter" id="filterRegion" onchange="onDimFilterChange()"><option value="">全部地区</option></select>
+  <span class="filter-label">医院</span>
+  <select class="hospital-filter" id="filterHospital" onchange="onDimFilterChange()"><option value="">全部医院</option></select>
+  <span class="filter-label">科室</span>
+  <select class="dept-filter" id="filterDept" onchange="onDimFilterChange()"><option value="">全部科室</option></select>
+  <button class="btn-clear-filter" id="clearDimBtn" onclick="clearDimFilters()" style="display:none">✕ 清空筛选</button>
+  <span class="divider">|</span>
   <button onclick="openAddModal()" class="primary" style="background:#34a853;color:#fff;border-color:#34a853;font-weight:500">＋新增</button>
- <button onclick="batchMode()" id="batchBtn">☑ 批量操作</button>
+  <button onclick="batchMode()" id="batchBtn">☑ 批量操作</button>
   <button class="danger" onclick="deduplicate()">🧹 一键去重</button>
+  <button onclick="openPlatformMgr()">🧩 平台管理</button>
   <label class="btn">📂 导入 JSON<input type="file" accept=".json" onchange="importJSON(event)"></label>
   <button onclick="exportJSON()">💾 导出 JSON</button>
-  <span style="color:#ccc;font-size:12px">|</span>
+  <span class="divider">|</span>
   <button onclick="exportBackup()">📦 备份</button>
   <span id="cloudStatus" style="font-size:12px;color:#666;display:inline-flex;align-items:center;gap:4px;cursor:pointer;margin-right:8px" onclick="showCloudLogin()">☁️ 未登录</span>
   <div class="search-box">
@@ -115,6 +157,11 @@ input[type=file]{display:none}
 </div>
 <div class="batch-bar" id="batchBar">
   <span>已选 <span class="count" id="selCount">0</span> 条</span>
+  <span class="pf-sel">
+    复制平台：
+    <select id="batchCopyPlatform"><option value="">（自动：取所有所选共有的第一个平台，无则按所选行原样复制）</option></select>
+  </span>
+  <button onclick="batchCopyAccounts()" style="background:#34a853;color:#fff;border-color:#34a853">📋 复制所选账号密码</button>
   <button onclick="batchEdit()" class="primary">✏ 批量修改</button>
   <button onclick="batchSetStatus('无')">⬜ 设为无</button>
   <button onclick="batchSetStatus('已下单')">📋 设已下单</button>
@@ -170,9 +217,51 @@ input[type=file]{display:none}
     </div>
   </div>
 </div>
+
+<div class="modal-overlay" id="platMgrOverlay">
+  <div class="modal">
+    <div class="modal-header"><span>🧩 平台管理</span><button class="close" onclick="closePlatformMgr()">✕</button></div>
+    <div class="modal-body" id="platMgrBody"></div>
+    <div class="modal-footer">
+      <button onclick="closePlatformMgr()" style="padding:6px 18px;background:#1a73e8;color:#fff;border:none;border-radius:5px">完成</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
+//===================== 平台库 =====================
+const DEFAULT_PLATFORMS = ['双卫','医博士','公需科目','举名','24小时'];
+const PLATFORMS_KEY = 'client_mgr_platforms_v3';
+let platformLib = []; // 当前生效的平台名数组
+
+function loadPlatforms(){
+  try{
+    const raw = localStorage.getItem(PLATFORMS_KEY);
+    if(raw){
+      const arr = JSON.parse(raw);
+      if(Array.isArray(arr) && arr.length){ platformLib = arr.map(String); return; }
+    }
+  }catch(e){}
+  platformLib = DEFAULT_PLATFORMS.slice();
+  savePlatforms();
+}
+function savePlatforms(){ localStorage.setItem(PLATFORMS_KEY, JSON.stringify(platformLib)); }
+
+function ensurePlatform(p){
+  if(!p) return;
+  const t = String(p).trim();
+  if(!t) return;
+  if(!platformLib.includes(t)){
+    platformLib.push(t);
+    savePlatforms();
+  }
+}
+// 启动时把数据里出现的所有平台名都收入平台库（向后兼容）
+function syncPlatformsFromData(){
+  (data||[]).forEach(r => (r.platforms||[]).forEach(p => ensurePlatform(p && p.platform)));
+}
+
 //===================== 内置数据 =====================
 const EMBEDDED_DATA = [];
 
@@ -182,22 +271,30 @@ const PAGE_SIZE = 999999;
 let page = 1;
 let isBatchMode = false;
 let editingIds = [];
-let statusFilter = 'all'; // 'all' | 'none' | 'progress' | 'done'
+let statusFilter = 'all';
+// 维度筛选
+let dimFilter = { platform:'', region:'', hospital:'', department:'' };
 
 function cleanAccount(acc){
   if(!acc)return acc;
   return String(acc).replace(/^(账号|用户名|小时)/,'');
 }
 function init() {
+  loadPlatforms();
   const saved = localStorage.getItem('client_mgr_v2');
-  if (saved) { try { data = JSON.parse(saved); cleanData(); if(data.length){render();return} } catch(e){} }
+  if (saved) { try { data = JSON.parse(saved); cleanData(); if(data.length){syncPlatformsFromData();renderFilterOptions();render();return} } catch(e){} }
   // Use embedded data
   data = mergeByName(EMBEDDED_DATA);
-  cleanData(); save(); render();
+  cleanData();
+  syncPlatformsFromData();
+  save();
+  renderFilterOptions();
+  render();
 }
 function cleanData(){
   data.forEach(r=>(r.platforms||[]).forEach(p=>{
     p.account=cleanAccount(p.account);
+    if(p.platform) ensurePlatform(p.platform);
   }));
 }
 
@@ -211,7 +308,7 @@ function mergeFlat(flat){
   const m=new Map();
   flat.forEach(r=>{
     const n=(r.name||'').trim();if(!n)return;
-    if(!m.has(n))m.set(n,{id:r.id||'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),name:n,hospital:r.hospital||'',department:r.department||'',region:r.region||'',platforms:[],createdAt:r.createdAt||new Date().toISOString()});
+    if(!m.has(n))m.set(n,{id:r.id||'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),name:n,hospital:r.hospital||'',department:r.department||'',region:r.platforms?r.region||'':(r.region||''),platforms:[],createdAt:r.createdAt||new Date().toISOString()});
     const x=m.get(n);
     if(r.hospital&&!x.hospital)x.hospital=r.hospital;
     if(r.department&&!x.department)x.department=r.department;
@@ -237,6 +334,51 @@ function mergeByName(arr){
   return [...m.values()];
 }
 
+function uniqSorted(arr){
+  return [...new Set(arr.filter(v=>v!=null && String(v).trim()!==''))].sort((a,b)=>String(a).localeCompare(String(b),'zh'));
+}
+function renderFilterOptions(){
+  // 平台选项
+  const pfSel = document.getElementById('filterPlatform');
+  const cur = dimFilter.platform;
+  pfSel.innerHTML = '<option value="">全部平台</option>' +
+    platformLib.map(p=>`<option value="${esc(p)}" ${p===cur?'selected':''}>${esc(p)}</option>`).join('');
+  // 地区/医院/科室：从数据里聚合
+  const regions = uniqSorted(data.map(r=>r.region));
+  const hospitals = uniqSorted(data.map(r=>r.hospital));
+  const depts = uniqSorted(data.map(r=>r.department));
+  const rsel = document.getElementById('filterRegion');
+  rsel.innerHTML = '<option value="">全部地区</option>' + regions.map(v=>`<option value="${esc(v)}" ${v===dimFilter.region?'selected':''}>${esc(v)}</option>`).join('');
+  const hsel = document.getElementById('filterHospital');
+  hsel.innerHTML = '<option value="">全部医院</option>' + hospitals.map(v=>`<option value="${esc(v)}" ${v===dimFilter.hospital?'selected':''}>${esc(v)}</option>`).join('');
+  const dsel = document.getElementById('filterDept');
+  dsel.innerHTML = '<option value="">全部科室</option>' + depts.map(v=>`<option value="${esc(v)}" ${v===dimFilter.department?'selected':''}>${esc(v)}</option>`).join('');
+  // 清空筛选按钮可见性
+  document.getElementById('clearDimBtn').style.display =
+    (cur||dimFilter.region||dimFilter.hospital||dimFilter.department) ? 'inline-block' : 'none';
+  // 批量复制的平台下拉
+  const bp = document.getElementById('batchCopyPlatform');
+  if(bp){
+    const bc = bp.dataset.cur || '';
+    bp.innerHTML = '<option value="">（自动：取所选第一个账号）</option>' +
+      platformLib.map(p=>`<option value="${esc(p)}" ${p===bc?'selected':''}>${esc(p)}</option>`).join('');
+    bp.dataset.cur = bc;
+  }
+}
+function onDimFilterChange(){
+  dimFilter.platform = document.getElementById('filterPlatform').value;
+  dimFilter.region = document.getElementById('filterRegion').value;
+  dimFilter.hospital = document.getElementById('filterHospital').value;
+  dimFilter.department = document.getElementById('filterDept').value;
+  page = 1;
+  render();
+}
+function clearDimFilters(){
+  dimFilter = { platform:'', region:'', hospital:'', department:'' };
+  renderFilterOptions();
+  render();
+}
+
 function getFiltered(){
   const q=document.getElementById('searchInput').value.trim().toLowerCase();
   let re = data;
@@ -244,6 +386,19 @@ function getFiltered(){
   // Status filter: show person if ANY platform matches the filter
   if(statusFilter!=='all'){
     re = re.filter(r=>(r.platforms||[]).some(p=>(p.status||'无')===statusFilter));
+  }
+  // 维度筛选
+  if(dimFilter.platform){
+    re = re.filter(r => (r.platforms||[]).some(p => (p.platform||'') === dimFilter.platform));
+  }
+  if(dimFilter.region){
+    re = re.filter(r => (r.region||'') === dimFilter.region);
+  }
+  if(dimFilter.hospital){
+    re = re.filter(r => (r.hospital||'') === dimFilter.hospital);
+  }
+  if(dimFilter.department){
+    re = re.filter(r => (r.department||'') === dimFilter.department);
   }
   return re;
 }
@@ -268,6 +423,7 @@ function render(){
   const totalProgress=data.filter(r=>(r.platforms||[]).some(p=>p.status==='学习中')).length;
   const totalDone=data.filter(r=>(r.platforms||[]).some(p=>p.status==='已完成')).length;
   document.getElementById('statsBar').innerHTML=`共 <strong>${data.length}</strong> 条，⬜<strong>${totalNone}</strong> 📋<strong>${totalOrdered}</strong> 🔄<strong>${totalProgress}</strong> ✅<strong>${totalDone}</strong>，筛选后 <strong>${total}</strong> 条`;
+  renderFilterOptions();
   const c=document.getElementById('container');
   if(!items.length){
     c.innerHTML=`<div class="empty-state"><div class="icon">📂</div><p>暂无数据 — 导入 JSON 开始管理</p></div>`;
@@ -332,7 +488,7 @@ function toggleCard(id){document.getElementById('card_'+id).classList.toggle('ex
 function toggleAll(){const e=document.querySelectorAll('.card.expanded').length;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('expanded',e===0))}
 
 function copyText(t){
-  navigator.clipboard.writeText(t).then(()=>toast('已复制')).catch(()=>{
+  return navigator.clipboard.writeText(t).then(()=>toast('已复制')).catch(()=>{
     const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('已复制');
   });
 }
@@ -365,6 +521,45 @@ function batchMode(){
 function selectAll(){const cbs=document.querySelectorAll('.sel-cb');[...cbs].every(cb=>cb.checked)?cbs.forEach(cb=>cb.checked=false):cbs.forEach(cb=>cb.checked=true);updateSel()}
 function clearSelection(){document.querySelectorAll('.sel-cb').forEach(cb=>cb.checked=false);updateSel()}
 function getSel(){return[...document.querySelectorAll('.sel-cb:checked')].map(cb=>cb.value)}
+
+//===================== 批量复制账号密码 =====================
+function batchCopyAccounts(){
+  const ids = getSel();
+  if(!ids.length) return toast('请先勾选要复制的客户');
+  const onlyPlatform = (document.getElementById('batchCopyPlatform')||{}).value || '';
+  // 选中客户的实际数据
+  const records = ids.map(id => data.find(d=>d.id===id)).filter(Boolean);
+  if(!records.length) return toast('未找到所选数据');
+
+  // 决定每个客户复制哪一行：
+  // 1) 若 onlyPlatform 指定，优先取该平台；找不到则跳过该客户。
+  // 2) 若未指定，按筛选/顺序取该客户在当前 getFiltered 顺序里的第一个（一般即列表里出现的第一个平台行）。
+  const filteredIds = getFiltered().map(x=>x.id);
+  const order = new Map(filteredIds.map((id,i)=>[id,i]));
+
+  const lines = [];
+  const skipped = [];
+  records.forEach(r=>{
+    let p = null;
+    if(onlyPlatform){
+      p = (r.platforms||[]).find(pp => (pp.platform||'') === onlyPlatform);
+      if(!p){ skipped.push(r.name); return; }
+    } else {
+      // 自动：取所选客户共有的第一个出现的平台行（如果所有人都有同一平台就用之，否则按当前列表顺序的第一个）
+      const common = (r.platforms||[]).slice().sort((a,b)=> (order.has(r.id) ? 0 : 1) - (order.has(r.id) ? 0 : 1))[0];
+      p = common;
+    }
+    if(p){
+      lines.push((p.account||'') + ' ' + (p.password||''));
+    }
+  });
+  if(!lines.length) return toast(skipped.length ? '所选客户无「'+onlyPlatform+'」账号' : '无可复制的账号');
+  const text = lines.join('\n');
+  copyText(text);
+  let msg = `已复制 ${lines.length} 组账号密码`;
+  if(skipped.length) msg += `（${skipped.length} 个客户无该平台）`;
+  toast(msg);
+}
 
 function deleteItem(id){
   const r=data.find(d=>d.id===id);
@@ -402,9 +597,54 @@ function batchSetStatus(s){
   save();render();toast(`已更新 ${ids.length} 条为 ${labels[s]}`);
   if(isBatchMode)batchMode();
 }
-function platOpts(s){return['双卫','医博士','公需科目','举名','24小时'].map(p=>`<option value="${p}" ${p===s?'selected':''}>${p}</option>`).join('')}
+
+//===================== 平台下拉选项 =====================
+function platOpts(s){
+  const cur = s || platformLib[0] || '';
+  return platformLib.map(p=>`<option value="${esc(p)}" ${p===cur?'selected':''}>${esc(p)}</option>`).join('');
+}
+// 模态框里专用的"可新增"平台输入：组合 select + "+新建" 按钮
+function platComboHtml(s, idx, prefix){
+  const selId = `${prefix}_pf_plat_${idx}`;
+  const cur = s || platformLib[0] || '';
+  const opts = platformLib.map(p=>`<option value="${esc(p)}" ${p===cur?'selected':''}>${esc(p)}</option>`).join('');
+  return `<span class="plat-combo">
+    <select id="${selId}" data-plat-input="1">${opts}</select>
+    <button type="button" class="btn-add-pf" style="padding:0 4px" onclick="quickAddPlatformInCombo('${selId}')" title="把输入框里的新名称加入平台库">+ 新建</button>
+    <input type="text" placeholder="或输入新平台名" class="quick-new-plat" data-target="${selId}" style="width:130px;padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+  </span>`;
+}
+function quickAddPlatformInCombo(selId){
+  const wrap = document.getElementById(selId).parentElement;
+  const inp = wrap.querySelector('.quick-new-plat');
+  const newName = (inp.value||'').trim();
+  if(!newName){ toast('请先输入新平台名'); return; }
+  ensurePlatform(newName);
+  // 重建所有下拉
+  rebuildAllPlatformSelects();
+  // 选中新建的平台
+  const sel = document.getElementById(selId);
+  if(sel){ sel.value = newName; }
+  inp.value = '';
+  toast('已新增平台：'+newName);
+}
+function rebuildAllPlatformSelects(){
+  document.querySelectorAll('select[data-plat-input="1"]').forEach(sel=>{
+    const cur = sel.value;
+    sel.innerHTML = platformLib.map(p=>`<option value="${esc(p)}" ${p===cur?'selected':''}>${esc(p)}</option>`).join('');
+  });
+}
+
 let pc=100;
-function addPf(){pc++;const d=document.createElement('div');d.className='platform-entry';d.innerHTML=`<select id="pf_plat_${pc}">${platOpts('双卫')}</select><input id="pf_acc_${pc}" placeholder="账号" style="width:110px"><input id="pf_pwd_${pc}" placeholder="密码" style="width:100px"><button class="rm-pf" onclick="this.parentElement.remove()">✕</button>`;document.getElementById('pfList').appendChild(d)}
+function addPf(){
+  pc++;
+  const d=document.createElement('div');d.className='platform-entry';
+  d.innerHTML = platComboHtml(platformLib[0]||'', pc, 'm') +
+    `<input id="m_pf_acc_${pc}" placeholder="账号" style="width:110px">
+     <input id="m_pf_pwd_${pc}" placeholder="密码" style="width:100px">
+     <button class="rm-pf" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('pfList').appendChild(d);
+}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.getElementById('addModalOverlay')&&document.getElementById('addModalOverlay').classList.remove('open');editingIds=[]}
 
 function openEdit(record,isBatch){
@@ -418,9 +658,9 @@ function openEdit(record,isBatch){
   }else if(record){
     const ps=(record.platforms||[]).map((p,i)=>`
       <div class="platform-entry">
-        <select id="pf_plat_${i}">${platOpts(p.platform)}</select>
-        <input id="pf_acc_${i}" value="${esc(p.account||'')}" placeholder="账号" style="width:110px">
-        <input id="pf_pwd_${i}" value="${esc(p.password||'')}" placeholder="密码" style="width:100px">
+        ${platComboHtml(p.platform, i, 'm')}
+        <input id="m_pf_acc_${i}" value="${esc(p.account||'')}" placeholder="账号" style="width:110px">
+        <input id="m_pf_pwd_${i}" value="${esc(p.password||'')}" placeholder="密码" style="width:100px">
         <button class="rm-pf" onclick="this.parentElement.remove()">✕</button>
       </div>`).join('');
     b.innerHTML=`
@@ -430,7 +670,9 @@ function openEdit(record,isBatch){
         <div class="form-group"><label>医院</label><input id="m_hospital" value="${esc(record.hospital||'')}"></div>
       </div>
       <div class="form-group"><label>科室</label><input id="m_department" value="${esc(record.department||'')}"></div>
-      <div class="form-group"><label>账号信息</label><div id="pfList">${ps}</div><button class="btn-add-pf" onclick="addPf()">+ 添加账号</button></div>`;
+      <div class="form-group"><label>账号信息</label><div id="pfList">${ps}</div><button class="btn-add-pf" onclick="addPf()">+ 添加账号</button>
+        <div class="hint">提示：平台名可下拉选择，也可在右侧输入新名称 → 【+ 新建】临时加入平台库（也可到工具栏「🧩 平台管理」统一维护）。</div>
+      </div>`;
   }
   m.classList.add('open');
 }
@@ -450,9 +692,14 @@ function saveModal(){
   r.hospital=document.getElementById('m_hospital').value.trim();
   r.department=document.getElementById('m_department').value.trim();
   const np=[];
-  document.querySelectorAll('.platform-entry').forEach(el=>{
-    const sel=el.querySelector('select');const acc=el.querySelector('input[id^="pf_acc_"]');const pwd=el.querySelector('input[id^="pf_pwd_"]');
-    if(sel&&acc&&sel.value&&acc.value.trim())np.push({platform:sel.value,account:acc.value.trim(),password:pwd?pwd.value.trim():'',status:'无'});
+  document.querySelectorAll('#pfList .platform-entry').forEach(el=>{
+    const sel=el.querySelector('select[data-plat-input="1"]');
+    const acc=el.querySelector('input[id^="m_pf_acc_"]');
+    const pwd=el.querySelector('input[id^="m_pf_pwd_"]');
+    if(sel&&acc&&sel.value&&acc.value.trim()){
+      ensurePlatform(sel.value);
+      np.push({platform:sel.value,account:acc.value.trim(),password:pwd?pwd.value.trim():'',status:'无'});
+    }
   });
   if(np.length)r.platforms=np;
   closeModal();save();render();toast('已保存');
@@ -465,7 +712,7 @@ function importJSON(ev){
     try{
       let d=JSON.parse(e.target.result);if(!Array.isArray(d))return toast('需要 JSON 数组');
       if(d.length&&d[0].platforms!==undefined)data=mergeByName(d);else data=mergeFlat(d);
-      cleanData();save();render();toast(`导入 ${data.length} 条`);
+      cleanData();syncPlatformsFromData();save();render();toast(`导入 ${data.length} 条`);
     }catch(ex){toast('导入失败: '+ex.message)}
   };
   rd.readAsText(f);ev.target.value='';
@@ -490,26 +737,100 @@ document.addEventListener('drop',function(e){
     try{
       let d=JSON.parse(ev.target.result);if(!Array.isArray(d))return toast('无效 JSON');
       if(d.length&&d[0].platforms!==undefined)data=mergeByName(d);else data=mergeFlat(d);
-      save();render();toast(`导入 ${data.length} 条`);
+      cleanData();syncPlatformsFromData();save();render();toast(`导入 ${data.length} 条`);
     }catch(ex){toast('解析失败')}
   };
   rd.readAsText(f);
 });
+
+//===================== 平台管理（独立弹窗） =====================
+function openPlatformMgr(){
+  renderPlatformMgr();
+  document.getElementById('platMgrOverlay').classList.add('open');
+}
+function closePlatformMgr(){
+  document.getElementById('platMgrOverlay').classList.remove('open');
+  // 关闭时让所有下拉刷新
+  rebuildAllPlatformSelects();
+  renderFilterOptions();
+  render();
+}
+function renderPlatformMgr(){
+  const body = document.getElementById('platMgrBody');
+  if(!platformLib.length){
+    body.innerHTML = '<p style="color:#999;margin-bottom:8px">平台库为空，请添加你的第一个平台。</p>' +
+      platformMgrAddHtml();
+  } else {
+    body.innerHTML = '<p style="color:#666;margin-bottom:8px;font-size:12px">在下方维护所有平台名（增/删/重命名）。所有客户的「平台」字段都会使用这里的选项。</p>' +
+      '<div class="platform-mgr-list">' +
+      platformLib.map((p,i)=>`<span class="platform-mgr-chip" data-i="${i}">${esc(p)}
+        <button class="rename" onclick="renamePlatform(${i})" title="重命名">✎</button>
+        <button class="del" onclick="deletePlatform(${i})" title="删除">×</button>
+      </span>`).join('') +
+      '</div>' +
+      platformMgrAddHtml() +
+      '<p class="hint">删除/重命名不会改动已有客户数据，但若客户使用了已删除的平台名，相关记录仍会保留显示，只是不再出现在下拉选项中。</p>';
+  }
+}
+function platformMgrAddHtml(){
+  return `<div class="platform-mgr-add">
+    <input id="newPlatName" placeholder="新平台名称（任意命名，如：双卫A、成都继教）" onkeydown="if(event.key==='Enter'){addPlatformFromMgr()}">
+    <button onclick="addPlatformFromMgr()">＋ 新增平台</button>
+  </div>`;
+}
+function addPlatformFromMgr(){
+  const inp = document.getElementById('newPlatName');
+  const v = (inp.value||'').trim();
+  if(!v){ toast('请输入平台名'); return; }
+  if(platformLib.includes(v)){ toast('该平台已存在'); return; }
+  platformLib.push(v);
+  savePlatforms();
+  renderPlatformMgr();
+  toast('已新增：'+v);
+}
+function renamePlatform(i){
+  const old = platformLib[i];
+  const nv = prompt('重命名平台：', old);
+  if(nv==null) return;
+  const v = nv.trim();
+  if(!v) return toast('名称不能为空');
+  if(v!==old && platformLib.includes(v)) return toast('该名称已存在');
+  // 同步更新所有客户数据中已用此平台名的行
+  data.forEach(r=>(r.platforms||[]).forEach(p=>{ if(p.platform===old) p.platform = v; }));
+  platformLib[i] = v;
+  savePlatforms(); save();
+  renderPlatformMgr();
+  toast('已重命名');
+}
+function deletePlatform(i){
+  const p = platformLib[i];
+  if(!confirm(`删除平台「${p}」？\n（不会删除已使用此平台的客户数据，只是不再出现在下拉中）`)) return;
+  platformLib.splice(i,1);
+  savePlatforms();
+  renderPlatformMgr();
+  toast('已删除');
+}
+
 init();
 
 //===================== 新增客户 =====================
 function openAddModal(){
   document.getElementById('addModalTitle').textContent = '新增客户';
   const b = document.getElementById('addModalBody');
+  const firstPlat = platformLib[0] || '';
+  const firstOpts = platformLib.map(p=>`<option value="${esc(p)}" ${p===firstPlat?'selected':''}>${esc(p)}</option>`).join('');
   b.innerHTML = '<div class="form-group"><label>姓名 *</label><input id="af_name" placeholder="输入姓名"></div>' +
     '<div class="form-row"><div class="form-group"><label>地区</label><input id="af_region" placeholder="如：成都"></div>' +
     '<div class="form-group"><label>医院</label><input id="af_hospital" placeholder="如：彭州市人民医院"></div></div>' +
     '<div class="form-group"><label>科室</label><input id="af_dept" placeholder="如：放射科"></div>' +
     '<div class="form-group"><label>平台账号</label><div id="af_pfList"><div class="platform-entry">' +
-    '<select><option>双卫</option><option>医博士</option><option>公需科目</option><option>举名</option><option>24小时</option></select>' +
-    '<input placeholder="账号" style="flex:1"><input placeholder="密码" style="flex:1">' +
+    `<span class="plat-combo"><select data-plat-input="1" id="af_pf_plat_0">${firstOpts}</select>
+       <button type="button" class="btn-add-pf" style="padding:0 4px" onclick="quickAddPlatformInCombo('af_pf_plat_0')" title="把输入框里的新名称加入平台库">+ 新建</button>
+       <input type="text" placeholder="或输入新平台名" class="quick-new-plat" data-target="af_pf_plat_0" style="width:130px;padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:12px"></span>` +
+    '<input id="af_pf_acc_0" placeholder="账号" style="flex:1"><input id="af_pf_pwd_0" placeholder="密码" style="flex:1">' +
     '<button class="rm-pf" onclick="this.parentElement.remove()">✕</button></div></div>' +
-    '<button class="btn-add-pf" onclick="addPfEntry()">+ 添加平台</button>';
+    '<button class="btn-add-pf" onclick="addPfEntry()">+ 添加平台</button>' +
+    '<p class="hint">提示：点击下拉旁的【+ 新建】可在新增客户时同步加入新平台名。也可到工具栏「🧩 平台管理」统一维护。</p>';
   document.getElementById('addModalOverlay').classList.add('open');
 }
 function closeAddModal(){
@@ -517,9 +838,16 @@ function closeAddModal(){
 }
 function addPfEntry(){
   const d = document.getElementById('af_pfList');
+  const idx = d.querySelectorAll('.platform-entry').length;
+  const firstPlat = platformLib[0] || '';
+  const firstOpts = platformLib.map(p=>`<option value="${esc(p)}" ${p===firstPlat?'selected':''}>${esc(p)}</option>`).join('');
+  const selId = `af_pf_plat_${idx}`;
   d.insertAdjacentHTML('beforeend', '<div class="platform-entry">' +
-    '<select><option>双卫</option><option>医博士</option><option>公需科目</option><option>举名</option><option>24小时</option></select>' +
-    '<input placeholder="账号" style="flex:1"><input placeholder="密码" style="flex:1">' +
+    `<span class="plat-combo"><select data-plat-input="1" id="${selId}">${firstOpts}</select>
+       <button type="button" class="btn-add-pf" style="padding:0 4px" onclick="quickAddPlatformInCombo('${selId}')">+ 新建</button>
+       <input type="text" placeholder="或输入新平台名" class="quick-new-plat" data-target="${selId}" style="width:130px;padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:12px"></span>` +
+    `<input id="af_pf_acc_${idx}" placeholder="账号" style="flex:1">` +
+    `<input id="af_pf_pwd_${idx}" placeholder="密码" style="flex:1">` +
     '<button class="rm-pf" onclick="this.parentElement.remove()">✕</button></div>');
 }
 function saveAddModal(){
@@ -530,11 +858,13 @@ function saveAddModal(){
   const dept = document.getElementById('af_dept').value.trim();
   const platforms = [];
   document.querySelectorAll('#af_pfList .platform-entry').forEach(el => {
-    const sel = el.querySelector('select');
+    const sel = el.querySelector('select[data-plat-input="1"]');
     const inputs = el.querySelectorAll('input');
-    const acc = inputs[0].value.trim();
+    // inputs: [quick-new-plat, 账号, 密码]
+    const acc = inputs[1] ? inputs[1].value.trim() : '';
     if(sel && acc){
-      const pwd = inputs[1] ? inputs[1].value.trim() : '';
+      ensurePlatform(sel.value);
+      const pwd = inputs[2] ? inputs[2].value.trim() : '';
       platforms.push({platform: sel.value, account: cleanAccount(acc), password: pwd, status: '无'});
     }
   });
@@ -621,11 +951,9 @@ function cloudPull(){
     try{
       var remoteData = JSON.parse(content);
       if(!Array.isArray(remoteData)){log('❌ 云端数据格式错误'); return}
-      // Merge with local
       var merged = mergeByName([...data, ...remoteData]);
-      // Re-assign IDs for duplicates
       data = merged;
-      cleanData();
+      cleanData();syncPlatformsFromData();
       save();
       render();
       log('✅ 下载并合并成功！共 ' + data.length + ' 条');
