@@ -192,6 +192,13 @@ input[type=file]{display:none}
         <button onclick="cloudLogout()" style="padding:8px 20px;background:#d32f2f;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">退出登录</button>
       </div>
       <div id="cloudLog" style="font-size:12px;color:#666;background:#f5f5f5;padding:8px;border-radius:6px;max-height:200px;overflow-y:auto;white-space:pre-wrap;line-height:1.6">就绪</div>
+      <div style="margin-top:10px;padding:10px 12px;background:#fff8e1;border-left:3px solid #f9ab00;border-radius:4px;font-size:12px;color:#7a5800;line-height:1.7">
+        <b>🔐 隐私提示</b><br>
+        • 请使用 <b>您自己的</b> GitHub Token 和 Gist ID。<br>
+        • 上传会<b>覆盖</b>该 Gist 中已有的内容，多设备时请先下载再上传，避免丢数据。<br>
+        • Token 等同您 GitHub 账号的钥匙，<b>请勿</b>分享给他人或填入来源不明的仓库。<br>
+        • 本工具不会把您的 Token / Gist ID 上传到任何第三方服务器，仅保存在本机浏览器。
+      </div>
     </div>
   </div>
 </div>
@@ -926,6 +933,9 @@ function cloudLogout(){
 }
 function cloudPush(){
   var cfg = getCloudCfg(); if(!cfg) return;
+  var n = Array.isArray(data) ? data.length : 0;
+  var msg = '确定要把当前 ' + n + ' 条客户数据上传到云端 Gist 吗？\n\n⚠️ 这会覆盖 Gist 中已有的数据。';
+  if(!confirm(msg)) return;
   log('正在上传数据到 GitHub...');
   var jsonData = JSON.stringify(data, null, 2);
   if(cfg.gistId){
@@ -945,6 +955,8 @@ function cloudPush(){
 }
 function cloudPull(){
   var cfg = getCloudCfg(); if(!cfg) return;
+  var msg = '从云端下载的数据会【覆盖】本地当前数据（已选合并模式请忽略此提示）。\n\n确定要下载并覆盖本地 ' + (Array.isArray(data)?data.length:0) + ' 条数据吗？';
+  if(!confirm(msg)) return;
   if(!cfg.gistId){log('❌ 没有 Gist ID，请先上传一次或填写已有 Gist ID'); return}
   log('正在从 GitHub 下载数据...');
   getGist(cfg, function(content){
